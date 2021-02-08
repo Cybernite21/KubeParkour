@@ -8,9 +8,11 @@ public class PlayerController : MonoBehaviour
     public float scaleSpeed = 2f;
     public float jumpPower = 2f;
     public float moveSpeed = 2f;
+    public float rotSpeed = 2f;
 
     public Vector3[] scaleClamp = new Vector3[2] {new Vector3(.25f, .25f, .25f), new Vector3(4, 4, 4)};
     Vector3 movement;
+    float turn;
 
     public Vector2 rbMassMinMax;
 
@@ -21,14 +23,16 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();        
     }
 
     // Update is called once per frame
     void Update()
     {
         //movement input
-        movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        movement = transform.forward * Input.GetAxis("Vertical") + transform.right * Input.GetAxis("Horizontal");
+        //look input
+        turn = Input.GetAxis("Debug Horizontal");
     }
 
     void FixedUpdate()
@@ -67,6 +71,9 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
             isGrounded = false;
         }
+
+        //turning
+        rb.MoveRotation(transform.rotation * Quaternion.Euler(transform.up * turn * rotSpeed));
 
         //movement
         rb.MovePosition(transform.position + -movement.normalized * moveSpeed * Time.deltaTime);
