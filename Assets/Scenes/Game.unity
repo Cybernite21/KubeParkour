@@ -241,7 +241,7 @@ MonoBehaviour:
   scaleClamp:
   - {x: 0.25, y: 0.25, z: 0.25}
   - {x: 2.5, y: 2.5, z: 2.5}
-  rbMassMinMax: {x: 0.75, y: 2.5}
+  rbMassMinMax: {x: 1, y: 2.5}
   isGrounded: 0
 --- !u!54 &242979523
 Rigidbody:
@@ -1532,6 +1532,7 @@ MonoBehaviour:
   target: {fileID: 1738281811}
   smoothSpeed: 1
   offset: {x: 0, y: 1.5, z: 3.5}
+  plr: {fileID: 0}
 --- !u!1 &1738281810
 GameObject:
   m_ObjectHideFlags: 0
