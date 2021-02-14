@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float jumpPower = 2f;
     public float moveSpeed = 2f;
     public float rotSpeed = 2f;
+    public float scaleFactor;
 
     public Vector3[] scaleClamp = new Vector3[2] {new Vector3(.25f, .25f, .25f), new Vector3(4, 4, 4)};
     Vector3 movement;
@@ -37,8 +38,8 @@ public class PlayerController : MonoBehaviour
         turn = Input.GetAxis("Debug Horizontal");
 
         //Change color based on scale
-        float scaleColorFactor = Remap(transform.localScale.x, scaleClamp[0].x, scaleClamp[1].x, 0f, 1f);
-        GetComponent<Renderer>().material.color = Color.Lerp(scaleColors[0], scaleColors[1], scaleColorFactor);
+        scaleFactor = Remap(transform.localScale.x, scaleClamp[0].x, scaleClamp[1].x, 0f, 1f);
+        GetComponent<Renderer>().material.color = Color.Lerp(scaleColors[0], scaleColors[1], scaleFactor);
     }
 
     void FixedUpdate()

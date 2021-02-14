@@ -8,7 +8,8 @@ public class CameraFollow : MonoBehaviour
 	public Transform target;
 
 	public float smoothSpeed = 0.125f;
-	public Vector3 offset;
+	Vector3 offset;
+	public Vector3[] offsets = new Vector3[2];
 
 	float turn;
 
@@ -21,6 +22,7 @@ public class CameraFollow : MonoBehaviour
 
     void Update()
     {
+		offset = Vector3.Lerp(offsets[0], offsets[1], plr.GetComponent<PlayerController>().scaleFactor);
 		turn = Input.GetAxis("Debug Horizontal");
 	}
     void FixedUpdate()
