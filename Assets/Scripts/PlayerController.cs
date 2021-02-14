@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
+    public Color[] scaleColors = new Color[2];
+
     public float scaleSpeed = 2f;
     public float jumpPower = 2f;
     public float moveSpeed = 2f;
@@ -33,6 +35,10 @@ public class PlayerController : MonoBehaviour
         movement = transform.forward * Input.GetAxis("Vertical") + transform.right * Input.GetAxis("Horizontal");
         //look input
         turn = Input.GetAxis("Debug Horizontal");
+
+        //Change color based on scale
+        float scaleColorFactor = Remap(transform.localScale.x, scaleClamp[0].x, scaleClamp[1].x, 0f, 1f);
+        GetComponent<Renderer>().material.color = Color.Lerp(scaleColors[0], scaleColors[1], scaleColorFactor);
     }
 
     void FixedUpdate()
@@ -104,5 +110,10 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = false;
         }
+    }
+
+    public static float Remap(float value, float from1, float to1, float from2, float to2)
+    {
+        return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
     }
 }

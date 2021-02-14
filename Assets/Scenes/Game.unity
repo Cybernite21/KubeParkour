@@ -234,6 +234,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 707e98635872fbb49ba19d78b6b9e295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaleColors:
+  - {r: 1, g: 0, b: 0, a: 0}
+  - {r: 0.73018885, g: 1, b: 0, a: 0}
   scaleSpeed: 2
   jumpPower: 2
   moveSpeed: 2
