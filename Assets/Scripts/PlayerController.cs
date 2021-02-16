@@ -14,7 +14,10 @@ public class PlayerController : MonoBehaviour
     public float scaleFactor;
 
     public Vector3[] scaleClamp = new Vector3[2] {new Vector3(.25f, .25f, .25f), new Vector3(4, 4, 4)};
+    public Vector3 rotationClamp = new Vector3(20, 360, 20);
     Vector3 movement;
+
+
     float turn;
 
     public Vector2 rbMassMinMax;
@@ -34,6 +37,7 @@ public class PlayerController : MonoBehaviour
     {
         //movement input
         movement = transform.forward * Input.GetAxis("Vertical") + transform.right * Input.GetAxis("Horizontal");
+        
         //look input
         turn = Input.GetAxis("Debug Horizontal");
 
@@ -84,6 +88,9 @@ public class PlayerController : MonoBehaviour
 
         //movement
         rb.MovePosition(transform.position + -movement.normalized * moveSpeed * Time.deltaTime);
+
+        //clamp rotation
+        rb.rotation = Quaternion.Euler(new Vector3(Mathf.Clamp(rb.rotation.x, -rotationClamp.x, rotationClamp.x), Mathf.Clamp(rb.rotation.y, -rotationClamp.y, rotationClamp.y), Mathf.Clamp(rb.rotation.z, -rotationClamp.z, rotationClamp.z)));
     }
 
     //Check if on ground
