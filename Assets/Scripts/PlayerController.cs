@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 2f;
     public float rotSpeed = 2f;
     public float scaleFactor;
+    public float turnSensitivity = .9f;
 
     public Vector3[] scaleClamp = new Vector3[2] {new Vector3(.25f, .25f, .25f), new Vector3(4, 4, 4)};
     public Vector3 rotationClamp = new Vector3(20, 360, 20);
@@ -24,22 +25,39 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rb;
 
+    public Transform top;
+
     public bool isGrounded;
+    public bool jump;
+
+    [HideInInspector]
+    public GameObject orien;
 
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();        
+        rb = GetComponent<Rigidbody>();
+        orien = new GameObject("Temp");
+        orien = (GameObject)Instantiate(orien, transform.position, transform.rotation);
     }
 
     // Update is called once per frame
     void Update()
     {
         //movement input
-        movement = transform.forward * Input.GetAxis("Vertical") + transform.right * Input.GetAxis("Horizontal");
-        
+        orien.transform.position = transform.position;
+        orien.transform.rotation = transform.rotation;
+        orien.transform.rotation = Quaternion.Euler(new Vector3(0, orien.transform.eulerAngles.y, 0));
+        movement = orien.transform.forward * Input.GetAxisRaw("Vertical") + orien.transform.right * Input.GetAxisRaw("Horizontal");
+
         //look input
-        turn = Input.GetAxis("Debug Horizontal");
+        turn = Input.GetAxis("Debug Horizontal") * turnSensitivity;
+
+        //Jump Input
+        if(Input.GetKeyDown(KeyCode.E) && isGrounded || Input.GetKeyDown(KeyCode.Joystick1Button0) && isGrounded || Input.GetKeyDown(KeyCode.Joystick1Button5) && isGrounded)
+        {
+            jump = true;
+        }
 
         //Change color based on scale
         scaleFactor = Remap(transform.localScale.x, scaleClamp[0].x, scaleClamp[1].x, 0f, 1f);
@@ -49,7 +67,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         //Scaling
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Joystick1Button4))
         {
             if (transform.localScale.x - Vector3.one.x * scaleSpeed * Time.deltaTime >= scaleClamp[0].x)
             {
@@ -77,20 +95,21 @@ public class PlayerController : MonoBehaviour
         }
 
         //Jumping
-        if(Input.GetKeyDown(KeyCode.E) && isGrounded)
+        if(jump && isGrounded)
         {
+            jump = false;
             rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
             isGrounded = false;
         }
 
         //turning
-        rb.MoveRotation(transform.rotation * Quaternion.Euler(transform.up * turn * rotSpeed));
+        rb.MoveRotation(Quaternion.Euler((Vector3.up * turn * rotSpeed) + transform.eulerAngles));
 
         //movement
         rb.MovePosition(transform.position + -movement.normalized * moveSpeed * Time.deltaTime);
 
         //clamp rotation
-        rb.rotation = Quaternion.Euler(new Vector3(Mathf.Clamp(rb.rotation.x, -rotationClamp.x, rotationClamp.x), Mathf.Clamp(rb.rotation.y, -rotationClamp.y, rotationClamp.y), Mathf.Clamp(rb.rotation.z, -rotationClamp.z, rotationClamp.z)));
+        //rb.rotation = Quaternion.Euler(new Vector3(Mathf.Clamp(rb.rotation.x, -rotationClamp.x, rotationClamp.x), Mathf.Clamp(rb.rotation.y, -rotationClamp.y, rotationClamp.y), Mathf.Clamp(rb.rotation.z, -rotationClamp.z, rotationClamp.z)));
     }
 
     //Check if on ground
