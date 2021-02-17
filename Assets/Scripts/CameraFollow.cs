@@ -48,9 +48,10 @@ public class CameraFollow : MonoBehaviour
 		transform.LookAt(target);
 	}*/
 
-    void LateUpdate()
+    void FixedUpdate()
     {
-		plrControllerOrien = plr.GetComponent<PlayerController>().orien.transform;
+		//plrControllerOrien = plr.GetComponent<PlayerController>().orien.transform;
+
 		//Transform newTarget = target;
 		//newTarget.position = newTarget.position + lookAtOffset;
 
