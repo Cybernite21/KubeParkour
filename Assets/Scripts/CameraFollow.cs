@@ -26,9 +26,11 @@ public class CameraFollow : MonoBehaviour
 
     void Update()
     {
-		offset = Vector3.Lerp(offsets[0], offsets[1], plr.GetComponent<PlayerController>().scaleFactor);
-		lookAtOffset = Vector3.Lerp(lookAtOffsets[0], lookAtOffsets[1], plr.GetComponent<PlayerController>().scaleFactor);
-		turn = Input.GetAxis("Debug Horizontal");
+		//offset = Vector3.Lerp(offsets[0], offsets[1], plr.GetComponent<PlayerController>().scaleFactor);
+		//lookAtOffset = Vector3.Lerp(lookAtOffsets[0], lookAtOffsets[1], plr.GetComponent<PlayerController>().scaleFactor);
+		
+		//turn = Input.GetAxis("Debug Horizontal");
+		
 		//target.transform.parent.rotation = Quaternion.Lerp(Quaternion.Euler(Vector3.zero), Quaternion.Inverse(plr.transform.rotation), .25f);
 		//target.transform.parent.rotation = Quaternion.Euler(Vector3.Scale(target.transform.parent.rotation.eulerAngles, new Vector3(1, 0, 1)));
 		//plrControllerOrien = plr.GetComponent<PlayerController>().orien.transform;
@@ -55,6 +57,9 @@ public class CameraFollow : MonoBehaviour
 
 		//Transform newTarget = target;
 		//newTarget.position = newTarget.position + lookAtOffset;
+
+		offset = Vector3.Lerp(offsets[0], offsets[1], plr.GetComponent<PlayerController>().scaleFactor);
+		//lookAtOffset = Vector3.Lerp(lookAtOffsets[0], lookAtOffsets[1], plr.GetComponent<PlayerController>().scaleFactor);
 
 		Vector3 desiredPosition = plrControllerOrien.position + plrControllerOrien.forward * offset.z + plrControllerOrien.right * offset.x + plrControllerOrien.up * offset.y;
 		//Vector3 desiredPosition = target.position + offset;

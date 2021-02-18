@@ -3912,7 +3912,7 @@ MonoBehaviour:
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 1
-  m_VolumeTrigger: {fileID: 0}
+  m_VolumeTrigger: {fileID: 2100057642}
   m_RenderPostProcessing: 1
   m_Antialiasing: 1
   m_AntialiasingQuality: 2
@@ -3993,12 +3993,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
-  m_ReferencePixelsPerUnit: 100
+  m_UiScaleMode: 1
+  m_ReferencePixelsPerUnit: 87.42
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.75
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -4095,7 +4095,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGlobal: 0
   priority: 0
-  blendDistance: 0
+  blendDistance: 5
   weight: 1
   sharedProfile: {fileID: 11400000, guid: 68c7bc5d7b746b8468c5d6e7667f60f0, type: 2}
 --- !u!4 &1890034551
@@ -4112,6 +4112,11 @@ Transform:
   m_Father: {fileID: 1417974870}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &2100057642 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4690098433567601880, guid: 4824d4a2ed414dc43b174e344ee87148, type: 3}
+  m_PrefabInstance: {fileID: 4690098433595418137}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2138677391
 GameObject:
   m_ObjectHideFlags: 0
@@ -4260,13 +4265,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4690098433567601882, guid: 4824d4a2ed414dc43b174e344ee87148, type: 3}
+      propertyPath: m_Interpolate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4690098433567601883, guid: 4824d4a2ed414dc43b174e344ee87148, type: 3}
+      propertyPath: orien
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4690098433567601883, guid: 4824d4a2ed414dc43b174e344ee87148, type: 3}
       propertyPath: rotSpeed
-      value: 4
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 4690098433567601883, guid: 4824d4a2ed414dc43b174e344ee87148, type: 3}
       propertyPath: moveSpeed
-      value: 8
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4690098433567601883, guid: 4824d4a2ed414dc43b174e344ee87148, type: 3}
+      propertyPath: isGrounded
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4690098433567601883, guid: 4824d4a2ed414dc43b174e344ee87148, type: 3}
+      propertyPath: scaleFactor
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4824d4a2ed414dc43b174e344ee87148, type: 3}

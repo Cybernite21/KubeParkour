@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
         {
             if (transform.localScale.x - Vector3.one.x * scaleSpeed * Time.deltaTime >= scaleClamp[0].x)
             {
-                transform.localScale = transform.localScale - Vector3.one * scaleSpeed * Time.deltaTime;
+                transform.localScale = transform.localScale - Vector3.one * scaleSpeed * Time.fixedDeltaTime;
                 rb.mass = Mathf.Clamp(rb.mass + scaleSpeed * Time.deltaTime, rbMassMinMax.x, rbMassMinMax.y);
             }
             else
@@ -87,10 +87,10 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if (transform.localScale.x + Vector3.one.x * scaleSpeed * Time.deltaTime <= scaleClamp[1].x)
+            if (transform.localScale.x + Vector3.one.x * scaleSpeed * Time.fixedDeltaTime <= scaleClamp[1].x)
             {
-                transform.localScale = transform.localScale + Vector3.one * scaleSpeed * Time.deltaTime;
-                rb.mass = Mathf.Clamp(rb.mass - scaleSpeed * Time.deltaTime, rbMassMinMax.x, rbMassMinMax.y);
+                transform.localScale = transform.localScale + Vector3.one * scaleSpeed * Time.fixedDeltaTime;
+                rb.mass = Mathf.Clamp(rb.mass - scaleSpeed * Time.fixedDeltaTime, rbMassMinMax.x, rbMassMinMax.y);
             }
             else
             {
@@ -108,10 +108,10 @@ public class PlayerController : MonoBehaviour
         }
 
         //turning
-        rb.MoveRotation(Quaternion.Euler((Vector3.up * turn * rotSpeed) + transform.eulerAngles));
+        rb.MoveRotation(Quaternion.Euler((Vector3.up * turn * rotSpeed * Time.fixedDeltaTime) + transform.eulerAngles));
 
         //movement
-        rb.MovePosition(transform.position + -movement.normalized * moveSpeed * Time.deltaTime);
+        rb.MovePosition(transform.position + -movement.normalized * moveSpeed * Time.fixedDeltaTime);
 
         //clamp rotation
         //rb.rotation = Quaternion.Euler(new Vector3(Mathf.Clamp(rb.rotation.x, -rotationClamp.x, rotationClamp.x), Mathf.Clamp(rb.rotation.y, -rotationClamp.y, rotationClamp.y), Mathf.Clamp(rb.rotation.z, -rotationClamp.z, rotationClamp.z)));
