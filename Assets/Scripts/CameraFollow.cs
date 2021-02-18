@@ -68,6 +68,6 @@ public class CameraFollow : MonoBehaviour
 
 		//transform.RotateAround(plr.position, plr.up, turn);
 
-		transform.LookAt(plrControllerOrien);
+		transform.LookAt(plrControllerOrien.position);
 	}
 }
