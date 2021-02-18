@@ -50,7 +50,8 @@ public class CameraFollow : MonoBehaviour
 
     void FixedUpdate()
     {
-		//plrControllerOrien = plr.GetComponent<PlayerController>().orien.transform;
+		if(plrControllerOrien == null)
+			plrControllerOrien = plr.GetComponent<PlayerController>().orien.transform;
 
 		//Transform newTarget = target;
 		//newTarget.position = newTarget.position + lookAtOffset;
