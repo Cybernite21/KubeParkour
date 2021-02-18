@@ -34,11 +34,16 @@ public class PlayerController : MonoBehaviour
     public GameObject orien;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
         orien = new GameObject("Temp");
-        orien = (GameObject)Instantiate(orien, transform.position, transform.rotation);
+        //orien = (GameObject)Instantiate(new GameObject("Temp"), transform.position, transform.rotation);
+    }
+
+    void Start()
+    {
+
     }
 
     // Update is called once per frame

@@ -31,6 +31,7 @@ public class CameraFollow : MonoBehaviour
 		turn = Input.GetAxis("Debug Horizontal");
 		//target.transform.parent.rotation = Quaternion.Lerp(Quaternion.Euler(Vector3.zero), Quaternion.Inverse(plr.transform.rotation), .25f);
 		//target.transform.parent.rotation = Quaternion.Euler(Vector3.Scale(target.transform.parent.rotation.eulerAngles, new Vector3(1, 0, 1)));
+		//plrControllerOrien = plr.GetComponent<PlayerController>().orien.transform;
 	}
 
     /*void FixedUpdate()
@@ -50,8 +51,7 @@ public class CameraFollow : MonoBehaviour
 
     void FixedUpdate()
     {
-		if(plrControllerOrien == null)
-			plrControllerOrien = plr.GetComponent<PlayerController>().orien.transform;
+		//plrControllerOrien = plr.GetComponent<PlayerController>().orien.transform;
 
 		//Transform newTarget = target;
 		//newTarget.position = newTarget.position + lookAtOffset;
