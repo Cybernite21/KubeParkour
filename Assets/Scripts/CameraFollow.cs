@@ -14,6 +14,8 @@ public class CameraFollow : MonoBehaviour
 	public Vector3[] offsets = new Vector3[2];
 	public Vector3[] lookAtOffsets = new Vector3[2];
 
+	Vector3 smoothedPosition;
+
 	float turn;
 
 	public Transform plr;
@@ -63,11 +65,20 @@ public class CameraFollow : MonoBehaviour
 
 		Vector3 desiredPosition = plrControllerOrien.position + plrControllerOrien.forward * offset.z + plrControllerOrien.right * offset.x + plrControllerOrien.up * offset.y;
 		//Vector3 desiredPosition = target.position + offset;
-		Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime * 2);
+		smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime * 2);
+		//transform.position = smoothedPosition;
+
+		//transform.RotateAround(plr.position, plr.up, turn);
+
+		//transform.LookAt(plr.position);
+	}
+
+    void LateUpdate()
+    {
 		transform.position = smoothedPosition;
 
 		//transform.RotateAround(plr.position, plr.up, turn);
 
-		transform.LookAt(plrControllerOrien.position);
+		transform.LookAt(plr.position);
 	}
 }
