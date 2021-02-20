@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamageable
 {
+    //IDamageable Variables
+    private int health = 100;
+    private int airInTank = 25;
+    
     public Color[] scaleColors = new Color[2];
 
     public float scaleSpeed = 2f;
@@ -17,7 +21,6 @@ public class PlayerController : MonoBehaviour
     public Vector3[] scaleClamp = new Vector3[2] {new Vector3(.25f, .25f, .25f), new Vector3(4, 4, 4)};
     public Vector3 rotationClamp = new Vector3(20, 360, 20);
     Vector3 movement;
-
 
     float turn;
 
@@ -115,6 +118,54 @@ public class PlayerController : MonoBehaviour
 
         //clamp rotation
         //rb.rotation = Quaternion.Euler(new Vector3(Mathf.Clamp(rb.rotation.x, -rotationClamp.x, rotationClamp.x), Mathf.Clamp(rb.rotation.y, -rotationClamp.y, rotationClamp.y), Mathf.Clamp(rb.rotation.z, -rotationClamp.z, rotationClamp.z)));
+    }
+
+    //IDamageable Take Damage Function
+    public void takeDamage(int damage)
+    {
+        //Subract airInTank first, then health when in water;
+        if(airInTank > 0)
+        {
+            damage -= airInTank;
+            airInTank = Mathf.Clamp(airInTank - damage, 0, airInTank);
+
+            if(damage > 0)
+            {
+                health = Mathf.Clamp(health - damage, 0, health);
+            }
+        }
+
+        else
+        {
+            health = Mathf.Clamp(health - damage, 0, health);
+        }
+    }
+
+    //IDamageable Variables
+    public int Health
+    {
+        get
+        {
+            return health;
+        }
+
+        set
+        {
+            health = value;
+        }
+    }
+
+    public int AirInTank
+    {
+        get
+        {
+            return airInTank;
+        }
+
+        set
+        {
+            airInTank = value;
+        }
     }
 
     //Check if on ground
