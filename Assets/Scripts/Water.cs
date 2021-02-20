@@ -11,6 +11,11 @@ public class Water : MonoBehaviour
     public int damageRateInSeconds = 2;
 
     private float _timer;
+
+    public float destinationHeight = 5;
+    public float floodSpeed = .5f;
+    public float delayToStartFlood = 5;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +25,16 @@ public class Water : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Time.unscaledTime > delayToStartFlood && transform.position.y < destinationHeight)
+        {
+            if((transform.position + Vector3.up.normalized * floodSpeed * Time.deltaTime).y <= destinationHeight)
+                transform.position = transform.position + Vector3.up.normalized * floodSpeed * Time.deltaTime;
+            else
+            {
+                transform.position = new Vector3(transform.position.x, destinationHeight, transform.position.z);
+            }
+        }
+
         if(Time.unscaledTime > _timer && objectsToDamage.Count > 0)
         {
             //Damage Objects in List
@@ -27,14 +42,14 @@ public class Water : MonoBehaviour
             {
                 obj.takeDamage(damage);
                 //Debugging
-                /*if(obj.AirInTank > 0)
+                if(obj.AirInTank > 0)
                 {
                     print(obj.AirInTank);
                 }
                 else
                 {
                     print(obj.Health);
-                }*/
+                } 
             }
             _timer = Time.unscaledTime + damageRateInSeconds;
         }
