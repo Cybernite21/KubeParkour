@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: GateHalo
+  m_Shader: {fileID: -6465566751694194690, guid: 73477b7d289937146909faa021c5e2e8, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_55d37d1a00af464ea246244469ce0ae5: 0.5
+    - Vector1_74f8edc75bab442c8c258edd82426229: 1
+    - Vector1_9b579721d2944f35b01075182212a1c7: 0.125
+    - Vector1_ba4c80d714eb43df91a4c822ff8e1139: 1
+    - Vector1_ccf34301bfb7425285f4da3efc33e29e: 1
+    - Vector1_dcc94fb1eb1642a8beace6423aa94028: 10
+    - Vector1_e3c57c3a298a46b49183fc26410a68c7: 100
+    - Vector1_ebc8751b43274f078d9a56a7cad87ece: 0.5
+    m_Colors:
+    - Color_001efac675ab430192ecd659f53f2fb2: {r: 0, g: 0.7942071, b: 1, a: 0.2}
+    - Color_14fab30b71cf4847a1feea5cc076899d: {r: 1, g: 1, b: 1, a: 0.7450981}
+    - Color_1ed0cdc16168479e8fb5643c0cd01370: {r: 0, g: 0.24022278, b: 1, a: 0.49411765}
+  m_BuildTextureStacks: []
