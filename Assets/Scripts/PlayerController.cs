@@ -123,21 +123,22 @@ public class PlayerController : MonoBehaviour, IDamageable
     //IDamageable Take Damage Function
     public void takeDamage(int damage)
     {
+        int _dmg = damage;
         //Subract airInTank first, then health when in water;
-        if(airInTank > 0)
+        if(AirInTank > 0)
         {
             damage -= airInTank;
-            airInTank = Mathf.Clamp(airInTank - damage, 0, airInTank);
+            AirInTank = Mathf.Clamp(AirInTank - _dmg, 0, AirInTank);
 
             if(damage > 0)
             {
-                health = Mathf.Clamp(health - damage, 0, health);
+                Health = Mathf.Clamp(Health - damage, 0, Health);
             }
         }
 
         else
         {
-            health = Mathf.Clamp(health - damage, 0, health);
+            Health = Mathf.Clamp(Health - damage, 0, Health);
         }
     }
 
