@@ -129,7 +129,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh36918
+  m_Name: pb_Mesh-1324
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6093,6 +6093,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6270730880301174134, guid: 59586bac4e8fcdd408e16659130c7a50, type: 3}
+      propertyPath: screenRippleMat
+      value: 
+      objectReference: {fileID: 2100000, guid: b2991e924c3ceeb41b33bec04b3313ac, type: 2}
+    - target: {fileID: 6270730880301174134, guid: 59586bac4e8fcdd408e16659130c7a50, type: 3}
+      propertyPath: forwardRendererData
+      value: 
+      objectReference: {fileID: 11400000, guid: 4a8e21d5c33334b11b34a596161b9360, type: 2}
+    - target: {fileID: 6270730880301174134, guid: 59586bac4e8fcdd408e16659130c7a50, type: 3}
+      propertyPath: maxScreenRippleStrength
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 6270730880301174138, guid: 59586bac4e8fcdd408e16659130c7a50, type: 3}
       propertyPath: m_RootOrder
       value: 10

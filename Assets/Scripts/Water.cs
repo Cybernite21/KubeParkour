@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 [RequireComponent(typeof(BoxCollider))]
 public class Water : MonoBehaviour
 {
     private List<IDamageable> objectsToDamage = new List<IDamageable>();
+    private string screenRippleMatStrengthName = "Vector1_4631a28c3df1447e9e4f219f032d345c";
 
     public int damage = 10;
     public int damageRateInSeconds = 2;
@@ -15,11 +17,23 @@ public class Water : MonoBehaviour
     public float destinationHeight = 5;
     public float floodSpeed = .5f;
     public float delayToStartFlood = 5;
+    public float maxScreenRippleStrength = .005f;
+    public float screenRippleFadeSpeed = 5;
+
+    public Material screenRippleMat;
+
+    public Transform plr;
+
+    public ForwardRendererData forwardRendererData;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        plr = GameObject.FindGameObjectWithTag("Player").transform;
+        Blit rippleBlit = forwardRendererData.rendererFeatures[0] as Blit;
+        screenRippleMat = new Material(screenRippleMat);
+        rippleBlit.settings.blitMaterial = screenRippleMat;
+        screenRippleMat.SetFloat(screenRippleMatStrengthName, 0f);
     }
 
     // Update is called once per frame
@@ -52,6 +66,17 @@ public class Water : MonoBehaviour
                 } 
             }
             _timer = Time.unscaledTime + damageRateInSeconds;
+        }
+
+        if(GetComponent<BoxCollider>().bounds.Contains(plr.position))
+        {
+            float t = screenRippleMat.GetFloat(screenRippleMatStrengthName);
+            screenRippleMat.SetFloat(screenRippleMatStrengthName, Mathf.Clamp(t + (maxScreenRippleStrength/screenRippleFadeSpeed * Time.deltaTime), 0, maxScreenRippleStrength));
+        }
+        else
+        {
+            float t = screenRippleMat.GetFloat(screenRippleMatStrengthName);
+            screenRippleMat.SetFloat(screenRippleMatStrengthName, Mathf.Clamp(t - (maxScreenRippleStrength / screenRippleFadeSpeed * Time.deltaTime), 0, maxScreenRippleStrength));
         }
     }
 
