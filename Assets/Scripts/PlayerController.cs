@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,9 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour, IDamageable
 {
+    //Public Events Player Will Call
+    public event Action playerDeath; 
+
     //IDamageable Variables
     private int health = 100;
     private int airInTank = 25;
@@ -77,6 +81,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         scaleFactor = Remap(transform.localScale.x, scaleClamp[0].x, scaleClamp[1].x, 0f, 1f);
         GetComponent<Renderer>().material.color = Color.Lerp(scaleColors[0], scaleColors[1], scaleFactor);
 
+        //Update Bars
         if(AirInTankSlider.value != AirInTank)
         {
             AirInTankSlider.value = AirInTank;
@@ -84,6 +89,15 @@ public class PlayerController : MonoBehaviour, IDamageable
         if (HealthSlider.value != Health)
         {
             HealthSlider.value = Health;
+        }
+
+        //Check For Death
+        if(Health <= 0)
+        {
+            if(playerDeath != null)
+            {
+                playerDeath();
+            }
         }
     }
 
