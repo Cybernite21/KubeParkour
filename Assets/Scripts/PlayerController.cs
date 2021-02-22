@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour, IDamageable
 {
     //Public Events Player Will Call
-    public event Action playerDeath; 
+    public static event Action playerDeath; 
 
     //IDamageable Variables
     private int health = 100;
