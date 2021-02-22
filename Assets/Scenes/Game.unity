@@ -4712,6 +4712,17 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &2022181366 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8319520298336865539, guid: 2e883f08b4bba244eb2b80bac565c697, type: 3}
+  m_PrefabInstance: {fileID: 5690006826876171359}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2100057642 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4690098433567601880, guid: 4824d4a2ed414dc43b174e344ee87148, type: 3}
@@ -4915,6 +4926,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fed5315919595754ab5592ce24b4abaa, type: 3}
+--- !u!114 &2595782980139774422 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3485257028204155362, guid: fed5315919595754ab5592ce24b4abaa, type: 3}
+  m_PrefabInstance: {fileID: 1465934954993459252}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &3738740935892568800 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2862777541752531668, guid: fed5315919595754ab5592ce24b4abaa, type: 3}
@@ -5015,6 +5037,14 @@ PrefabInstance:
       propertyPath: scaleFactor
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4690098433567601883, guid: 4824d4a2ed414dc43b174e344ee87148, type: 3}
+      propertyPath: HealthSlider
+      value: 
+      objectReference: {fileID: 2595782980139774422}
+    - target: {fileID: 4690098433567601883, guid: 4824d4a2ed414dc43b174e344ee87148, type: 3}
+      propertyPath: AirInTankSlider
+      value: 
+      objectReference: {fileID: 2022181366}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4824d4a2ed414dc43b174e344ee87148, type: 3}
 --- !u!1001 &5646903446532084129

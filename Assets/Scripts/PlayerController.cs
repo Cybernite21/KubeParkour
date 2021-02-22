@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour, IDamageable
@@ -33,6 +34,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     public bool isGrounded;
     public bool jump;
 
+    //Health and AirInTank Sliders
+    public Slider AirInTankSlider;
+    public Slider HealthSlider;
+
     [HideInInspector]
     public GameObject orien;
 
@@ -46,7 +51,8 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     void Start()
     {
-
+        AirInTankSlider.maxValue = AirInTank;
+        HealthSlider.maxValue = Health;
     }
 
     // Update is called once per frame
@@ -70,6 +76,15 @@ public class PlayerController : MonoBehaviour, IDamageable
         //Change color based on scale
         scaleFactor = Remap(transform.localScale.x, scaleClamp[0].x, scaleClamp[1].x, 0f, 1f);
         GetComponent<Renderer>().material.color = Color.Lerp(scaleColors[0], scaleColors[1], scaleFactor);
+
+        if(AirInTankSlider.value != AirInTank)
+        {
+            AirInTankSlider.value = AirInTank;
+        }
+        if (HealthSlider.value != Health)
+        {
+            HealthSlider.value = Health;
+        }
     }
 
     void FixedUpdate()

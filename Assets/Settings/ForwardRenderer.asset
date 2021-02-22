@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48712bbd63becfb49acca6cdac15fbbe, type: 3}
-  m_Name: NewBlit
+  m_Name: ScreenRippleBlit
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
     Event: 500
-    blitMaterial: {fileID: 2100000, guid: b2991e924c3ceeb41b33bec04b3313ac, type: 2}
+    blitMaterial: {fileID: 0}
     blitMaterialPassIndex: 0
     destination: 0
     textureId: _BlitPassTexture
