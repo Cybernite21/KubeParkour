@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -9,6 +11,10 @@ public class CameraFollow : MonoBehaviour
 	public Transform plrControllerOrien;
 
 	public float smoothSpeed = 0.125f;
+	public float maxFocusDistance = 15;
+
+	public int dofUpdateRate = 2;
+
 	Vector3 offset;
 	Vector3 lookAtOffset;
 	public Vector3[] offsets = new Vector3[2];
@@ -20,22 +26,36 @@ public class CameraFollow : MonoBehaviour
 
 	public Transform plr;
 
-    void Start()
-    {
+	//public Volume pp;
+	//DepthOfField dof;
+
+	//Ray r;
+	//RaycastHit rh;
+
+	void Start()
+	{
 		plr = GameObject.FindGameObjectWithTag("Player").transform;
 		plrControllerOrien = plr.GetComponent<PlayerController>().orien.transform;
-    }
+
+		//pp.profile.TryGet<DepthOfField>(out dof);
+		//r = new Ray(transform.position, transform.forward);
+	}
 
     void Update()
     {
 		//offset = Vector3.Lerp(offsets[0], offsets[1], plr.GetComponent<PlayerController>().scaleFactor);
 		//lookAtOffset = Vector3.Lerp(lookAtOffsets[0], lookAtOffsets[1], plr.GetComponent<PlayerController>().scaleFactor);
-		
+
 		//turn = Input.GetAxis("Debug Horizontal");
-		
+
 		//target.transform.parent.rotation = Quaternion.Lerp(Quaternion.Euler(Vector3.zero), Quaternion.Inverse(plr.transform.rotation), .25f);
 		//target.transform.parent.rotation = Quaternion.Euler(Vector3.Scale(target.transform.parent.rotation.eulerAngles, new Vector3(1, 0, 1)));
 		//plrControllerOrien = plr.GetComponent<PlayerController>().orien.transform;
+
+		/*if(Time.frameCount % dofUpdateRate == 0)
+        {
+			changeFocus();
+		}*/
 	}
 
     /*void FixedUpdate()
@@ -81,4 +101,19 @@ public class CameraFollow : MonoBehaviour
 
 		transform.LookAt(plr.position);
 	}
+
+	/*void changeFocus()
+    {
+		r.origin = transform.position;
+		r.direction = transform.forward;
+
+		if(Physics.Raycast(r, out rh, maxFocusDistance))
+        {
+			dof.focusDistance.value = rh.distance;
+        }
+		else
+        {
+			dof.focusDistance.value = maxFocusDistance;
+		}
+    }*/
 }
