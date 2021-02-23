@@ -6,6 +6,8 @@ using UnityEngine.Rendering.Universal;
 [RequireComponent(typeof(BoxCollider))]
 public class Water : MonoBehaviour
 {
+    public GameManager gManager;
+
     private List<IDamageable> objectsToDamage = new List<IDamageable>();
     private string screenRippleMatStrengthName = "Vector1_4631a28c3df1447e9e4f219f032d345c";
 
@@ -29,11 +31,31 @@ public class Water : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gManager = GameObject.FindObjectOfType<GameManager>();
+        if(gManager.gameSettings.useTheseSettings)
+        {
+            useGManagerSettings();
+        }
+
         plr = GameObject.FindGameObjectWithTag("Player").transform;
         Blit rippleBlit = forwardRendererData.rendererFeatures[0] as Blit;
         screenRippleMat = new Material(screenRippleMat);
         rippleBlit.settings.blitMaterial = screenRippleMat;
         screenRippleMat.SetFloat(screenRippleMatStrengthName, 0f);
+    }
+
+    void useGManagerSettings()
+    {
+        damage = gManager.gameSettings.damage;
+        damageRateInSeconds = gManager.gameSettings.damageRateInSeconds;
+        destinationHeight = gManager.gameSettings.destinationHeight;
+        floodSpeed = gManager.gameSettings.floodSpeed;
+        delayToStartFlood = gManager.gameSettings.delayToStartFlood;
+        maxScreenRippleStrength = gManager.gameSettings.maxScreenRippleStrength;
+        screenRippleFadeSpeed = gManager.gameSettings.screenRippleFadeSpeed;
+
+        screenRippleMat = gManager.gameSettings.screenRippleMat;
+        forwardRendererData = gManager.gameSettings.forwardRendererData;
     }
 
     // Update is called once per frame

@@ -129,7 +129,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1246
+  m_Name: pb_Mesh-1282
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1586,6 +1586,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frameRate: 120
+  gameSettings: {fileID: 11400000, guid: e6d805a88dfab1047ac49f1191ad0631, type: 2}
+  AirInTankSlider: {fileID: 2022181366}
+  HealthSlider: {fileID: 2595782980139774422}
 --- !u!4 &765481303
 Transform:
   m_ObjectHideFlags: 0

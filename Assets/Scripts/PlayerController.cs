@@ -7,6 +7,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour, IDamageable
 {
+    public GameManager gManager;
+
     //Public Events Player Will Call
     public static event Action playerDeath; 
 
@@ -55,8 +57,35 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     void Start()
     {
+        gManager = GameObject.FindObjectOfType<GameManager>();
+        if (gManager.gameSettings.useTheseSettings)
+        {
+            useGManagerSettings();
+        }
+
         AirInTankSlider.maxValue = AirInTank;
         HealthSlider.maxValue = Health;
+    }
+
+    void useGManagerSettings()
+    {
+        Health = gManager.gameSettings.health;
+        AirInTank = gManager.gameSettings.airInTank;
+
+        scaleColors = gManager.gameSettings.scaleColors;
+        scaleSpeed = gManager.gameSettings.scaleSpeed;
+        jumpPower = gManager.gameSettings.jumpPower;
+        moveSpeed = gManager.gameSettings.moveSpeed;
+        rotSpeed = gManager.gameSettings.rotSpeed;
+        turnSensitivity = gManager.gameSettings.turnSensitivity;
+
+        scaleClamp = gManager.gameSettings.scaleClamp;
+        rotationClamp = gManager.gameSettings.rotationClamp;
+
+        rbMassMinMax = gManager.gameSettings.rbMassMinMax;
+
+        AirInTankSlider = gManager.AirInTankSlider;
+        HealthSlider = gManager.HealthSlider;
     }
 
     // Update is called once per frame

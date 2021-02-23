@@ -7,7 +7,13 @@ using UnityEngine.Rendering.Universal;
 [CreateAssetMenu(fileName = "GameSettings", menuName = "Game Settings")]
 public class GameSettings : ScriptableObject
 {
+    [Header("Info:")]
+    [Space(5)]
+    public bool useTheseSettings;
+    [Space(10)]
     [Header("Player:")]
+    public int airInTank = 25;
+    public int health = 100;
     public Color[] scaleColors = new Color[2];
     public float scaleSpeed = 2f;
     public float jumpPower = 2f;

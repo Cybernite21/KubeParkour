@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce9518b74d966574d91017141a1d4eda, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
+  useTheseSettings: 1
   scaleColors:
   - {r: 1, g: 0, b: 0, a: 0}
   - {r: 0.7294118, g: 1, b: 0, a: 0}
