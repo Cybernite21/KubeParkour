@@ -129,7 +129,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh26552
+  m_Name: pb_Mesh-1282
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1254,6 +1254,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c19d58cbaefacf49ad5a3ada9a3394c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gManager: {fileID: 0}
+  plr: {fileID: 0}
+  AirInTankSlider: {fileID: 0}
+  HealthSlider: {fileID: 0}
   _fpsText: {fileID: 652088477}
   _hudRefreshRate: 0.25
 --- !u!43 &323864759

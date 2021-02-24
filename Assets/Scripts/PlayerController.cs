@@ -40,10 +40,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public bool isGrounded;
     public bool jump;
-
-    //Health and AirInTank Sliders
-    public Slider AirInTankSlider;
-    public Slider HealthSlider;
+    Renderer renderer;
 
     [HideInInspector]
     public GameObject orien;
@@ -52,6 +49,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        renderer = GetComponent<Renderer>();
         orien = new GameObject("Temp");
         //orien = (GameObject)Instantiate(new GameObject("Temp"), transform.position, transform.rotation);
     }
@@ -63,9 +61,6 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             useGManagerSettings();
         }
-
-        AirInTankSlider.maxValue = AirInTank;
-        HealthSlider.maxValue = Health;
     }
 
     void useGManagerSettings()
@@ -84,9 +79,6 @@ public class PlayerController : MonoBehaviour, IDamageable
         rotationClamp = gManager.gameSettings.rotationClamp;
 
         rbMassMinMax = gManager.gameSettings.rbMassMinMax;
-
-        AirInTankSlider = gManager.AirInTankSlider;
-        HealthSlider = gManager.HealthSlider;
     }
 
     // Update is called once per frame
@@ -110,17 +102,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         //Change color based on scale
         scaleFactor = Remap(transform.localScale.x, scaleClamp[0].x, scaleClamp[1].x, 0f, 1f);
         moveSpeed = Mathf.Lerp(moveSpeeds.x, moveSpeeds.y, scaleFactor);
-        GetComponent<Renderer>().material.color = Color.Lerp(scaleColors[0], scaleColors[1], scaleFactor);
-
-        //Update Bars
-        if(AirInTankSlider.value != AirInTank)
-        {
-            AirInTankSlider.value = AirInTank;
-        }
-        if (HealthSlider.value != Health)
-        {
-            HealthSlider.value = Health;
-        }
+        renderer.material.color = Color.Lerp(scaleColors[0], scaleColors[1], scaleFactor);
 
         //Check For Death
         if(Health <= 0)
