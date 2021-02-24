@@ -1586,7 +1586,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086281f66919028459b7b34ac459fbb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frameRate: 120
+  frameRate: 0
   gameSettings: {fileID: 11400000, guid: e6d805a88dfab1047ac49f1191ad0631, type: 2}
   AirInTankSlider: {fileID: 2022181366}
   HealthSlider: {fileID: 2595782980139774422}
