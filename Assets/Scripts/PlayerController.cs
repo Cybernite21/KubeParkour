@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public float scaleSpeed = 2f;
     public float jumpPower = 2f;
+    Vector2 moveSpeeds;
     public float moveSpeed = 2f;
     public float rotSpeed = 2f;
     public float scaleFactor;
@@ -75,7 +76,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         scaleColors = gManager.gameSettings.scaleColors;
         scaleSpeed = gManager.gameSettings.scaleSpeed;
         jumpPower = gManager.gameSettings.jumpPower;
-        moveSpeed = gManager.gameSettings.moveSpeed;
+        moveSpeeds = gManager.gameSettings.moveSpeeds;
         rotSpeed = gManager.gameSettings.rotSpeed;
         turnSensitivity = gManager.gameSettings.turnSensitivity;
 
@@ -108,6 +109,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         //Change color based on scale
         scaleFactor = Remap(transform.localScale.x, scaleClamp[0].x, scaleClamp[1].x, 0f, 1f);
+        moveSpeed = Mathf.Lerp(moveSpeeds.x, moveSpeeds.y, scaleFactor);
         GetComponent<Renderer>().material.color = Color.Lerp(scaleColors[0], scaleColors[1], scaleFactor);
 
         //Update Bars

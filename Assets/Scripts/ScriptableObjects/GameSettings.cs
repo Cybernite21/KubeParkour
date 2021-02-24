@@ -17,7 +17,7 @@ public class GameSettings : ScriptableObject
     public Color[] scaleColors = new Color[2];
     public float scaleSpeed = 2f;
     public float jumpPower = 2f;
-    public float moveSpeed = 2f;
+    public Vector2 moveSpeeds = new Vector2(5, 10);
     public float rotSpeed = 2f;
     public float turnSensitivity = .9f;
     public Vector3[] scaleClamp = new Vector3[2] { new Vector3(.25f, .25f, .25f), new Vector3(4, 4, 4) };
