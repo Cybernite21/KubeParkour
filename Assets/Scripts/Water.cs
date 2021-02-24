@@ -9,7 +9,7 @@ public class Water : MonoBehaviour
     public GameManager gManager;
 
     private List<IDamageable> objectsToDamage = new List<IDamageable>();
-    private string screenRippleMatStrengthName = "Vector1_4631a28c3df1447e9e4f219f032d345c";
+    private int screenRippleMatStrengthName;
 
     public int damage = 10;
     public int damageRateInSeconds = 2;
@@ -27,6 +27,11 @@ public class Water : MonoBehaviour
     public Transform plr;
 
     public ForwardRendererData forwardRendererData;
+
+    private void Awake()
+    {
+        screenRippleMatStrengthName = Shader.PropertyToID("Vector1_4631a28c3df1447e9e4f219f032d345c");
+    }
 
     // Start is called before the first frame update
     void Start()
