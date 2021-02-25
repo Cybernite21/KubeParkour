@@ -8,4 +8,5 @@ public interface IDamageable
     public int AirInTank { get; set; }
 
     public void takeDamage(int damage);
+    public void takeDamageFromWater(int damage);
 }

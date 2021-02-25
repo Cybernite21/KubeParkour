@@ -163,7 +163,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
 
     //IDamageable Take Damage Function
-    public void takeDamage(int damage)
+    public void takeDamageFromWater(int damage)
     {
         int _dmg = damage;
         //Subract airInTank first, then health when in water;
@@ -182,6 +182,11 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             Health = Mathf.Clamp(Health - damage, 0, Health);
         }
+    }
+
+    public void takeDamage(int damage)
+    {
+        Health = Mathf.Clamp(Health - damage, 0, Health);
     }
 
     //IDamageable Variables

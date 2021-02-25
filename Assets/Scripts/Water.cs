@@ -28,6 +28,9 @@ public class Water : MonoBehaviour
 
     public ForwardRendererData forwardRendererData;
 
+    [HideInInspector]
+    public BoxCollider waterBox;
+
     private void Awake()
     {
         screenRippleMatStrengthName = Shader.PropertyToID("Vector1_4631a28c3df1447e9e4f219f032d345c");
@@ -43,6 +46,7 @@ public class Water : MonoBehaviour
         }
 
         plr = GameObject.FindGameObjectWithTag("Player").transform;
+        waterBox = GetComponent<BoxCollider>();
         Blit rippleBlit = forwardRendererData.rendererFeatures[0] as Blit;
         screenRippleMat = new Material(screenRippleMat);
         rippleBlit.settings.blitMaterial = screenRippleMat;
@@ -81,7 +85,7 @@ public class Water : MonoBehaviour
             //Damage Objects in List
             foreach(IDamageable obj in objectsToDamage)
             {
-                obj.takeDamage(damage);
+                obj.takeDamageFromWater(damage);
                 //Debugging
                 if(obj.AirInTank > 0)
                 {
@@ -95,7 +99,7 @@ public class Water : MonoBehaviour
             _timer = Time.unscaledTime + damageRateInSeconds;
         }
 
-        if(GetComponent<BoxCollider>().bounds.Contains(plr.position))
+        if(waterBox.bounds.Contains(plr.position))
         {
             float t = screenRippleMat.GetFloat(screenRippleMatStrengthName);
             screenRippleMat.SetFloat(screenRippleMatStrengthName, Mathf.Clamp(t + (maxScreenRippleStrength/screenRippleFadeSpeed * Time.deltaTime), 0, maxScreenRippleStrength));
@@ -109,15 +113,25 @@ public class Water : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.GetComponent<IDamageable>() != null)
+        if (other.GetComponent<IDamageable>() != null && !objectsToDamage.Contains(other.GetComponent<IDamageable>()))
         {
-            objectsToDamage.Add(other.GetComponent<IDamageable>());
+            if(waterBox.bounds.Contains(other.gameObject.transform.position))
+                objectsToDamage.Add(other.GetComponent<IDamageable>());
+        }
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if(other.GetComponent<IDamageable>() != null && !objectsToDamage.Contains(other.GetComponent<IDamageable>()))
+        {
+            if (waterBox.bounds.Contains(other.gameObject.transform.position))
+                objectsToDamage.Add(other.GetComponent<IDamageable>());
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<IDamageable>() != null)
+        if (other.GetComponent<IDamageable>() != null && objectsToDamage.Contains(other.GetComponent<IDamageable>()))
         {
             objectsToDamage.Remove(other.GetComponent<IDamageable>());
         }
