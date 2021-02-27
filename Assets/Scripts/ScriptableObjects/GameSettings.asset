@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9518b74d966574d91017141a1d4eda, type: 3}
+  m_Name: GameSettings
+  m_EditorClassIdentifier: 
+  useTheseSettings: 1
+  airInTank: 25
+  health: 100
+  scaleColors:
+  - {r: 1, g: 0, b: 0, a: 0}
+  - {r: 0.7294118, g: 1, b: 0, a: 0}
+  scaleSpeed: 1
+  jumpPower: 4
+  moveSpeeds: {x: 5, y: 10}
+  rotSpeed: 150
+  turnSensitivity: 0.9
+  scaleClamp:
+  - {x: 0.25, y: 0.25, z: 0.25}
+  - {x: 2.5, y: 2.5, z: 2.5}
+  rotationClamp: {x: 1, y: 360, z: 1}
+  rbMassMinMax: {x: 0.75, y: 2.5}
+  damage: 10
+  damageRateInSeconds: 2
+  destinationHeight: 3
+  floodSpeed: 0.5
+  delayToStartFlood: 5
+  maxScreenRippleStrength: 0.0125
+  screenRippleFadeSpeed: 5
+  screenRippleMat: {fileID: 2100000, guid: b2991e924c3ceeb41b33bec04b3313ac, type: 2}
+  forwardRendererData: {fileID: 11400000, guid: 4a8e21d5c33334b11b34a596161b9360, type: 2}
