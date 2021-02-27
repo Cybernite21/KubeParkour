@@ -87,14 +87,14 @@ public class Water : MonoBehaviour
             {
                 obj.takeDamageFromWater(damage);
                 //Debugging
-                if(obj.AirInTank > 0)
+                /*if(obj.AirInTank > 0)
                 {
                     print(obj.AirInTank);
                 }
                 else
                 {
                     print(obj.Health);
-                } 
+                } */
             }
             _timer = Time.unscaledTime + damageRateInSeconds;
         }
