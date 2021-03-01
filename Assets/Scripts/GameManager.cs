@@ -6,8 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public PlayerController plr;
+    public Water water;
 
     public int frameRate = 60;
+
+    public float restartLevelDelay = 2f;
 
     public GameSettings gameSettings;
 
@@ -21,6 +25,9 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = frameRate;
         Gate.wonLevel += nextLevel;
         PlayerController.playerDeath += playerDied;
+
+        plr = FindObjectOfType<PlayerController>();
+        water = FindObjectOfType<Water>();
     }
 
     // Update is called once per frame
@@ -41,5 +48,12 @@ public class GameManager : MonoBehaviour
         PlayerController.playerDeath -= playerDied;
         //code when player dies
         print("Death");
+        plr.enabled = false;
+        Invoke("restartLevel", restartLevelDelay);
+    }
+
+    public void restartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
