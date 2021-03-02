@@ -85,6 +85,7 @@ public class CameraFollow : MonoBehaviour
 
 		Vector3 desiredPosition = plrControllerOrien.position + plrControllerOrien.forward * offset.z + plrControllerOrien.right * offset.x + plrControllerOrien.up * offset.y;
 		//Vector3 desiredPosition = target.position + offset;
+		print(plrControllerOrien.eulerAngles);
 		smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime * 2);
 		//transform.position = smoothedPosition;
 

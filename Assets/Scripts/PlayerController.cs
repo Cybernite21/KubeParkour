@@ -40,6 +40,12 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public bool isGrounded;
     public bool jump;
+    public bool climbWall;
+
+    Ray detectWallRay;
+    RaycastHit deatectClimbWallRayInfo;
+    public LayerMask wallMask;
+
     Renderer renderer;
 
     [HideInInspector]
@@ -79,6 +85,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         rotationClamp = gManager.gameSettings.rotationClamp;
 
         rbMassMinMax = gManager.gameSettings.rbMassMinMax;
+
+        wallMask = gManager.gameSettings.wallMask;
     }
 
     // Update is called once per frame
@@ -156,7 +164,25 @@ public class PlayerController : MonoBehaviour, IDamageable
         rb.MoveRotation(Quaternion.Euler((Vector3.up * turn * rotSpeed * Time.fixedDeltaTime) + transform.eulerAngles));
 
         //movement
-        rb.MovePosition(transform.position + -movement.normalized * moveSpeed * Time.fixedDeltaTime);
+        detectWallRay.origin = transform.position + -orien.transform.forward * transform.localScale.z / 2f;
+        detectWallRay.direction = -orien.transform.forward;
+
+        if (climbWall)
+            rb.isKinematic = true;
+        else
+            rb.isKinematic = false;
+        
+        if (Physics.Raycast(detectWallRay , out deatectClimbWallRayInfo, 0.5f, wallMask))
+        {
+            climbWall = true;
+            Vector3 wallMove = orien.transform.up * Input.GetAxisRaw("Vertical") + orien.transform.right * Input.GetAxisRaw("Horizontal");
+            rb.MovePosition(transform.position + wallMove.normalized * moveSpeed * Time.fixedDeltaTime);
+        }
+        else
+        {
+            climbWall = false;
+            rb.MovePosition(transform.position + -movement.normalized * moveSpeed * Time.fixedDeltaTime);
+        }
 
         //clamp rotation
         //rb.rotation = Quaternion.Euler(new Vector3(Mathf.Clamp(rb.rotation.x, -rotationClamp.x, rotationClamp.x), Mathf.Clamp(rb.rotation.y, -rotationClamp.y, rotationClamp.y), Mathf.Clamp(rb.rotation.z, -rotationClamp.z, rotationClamp.z)));

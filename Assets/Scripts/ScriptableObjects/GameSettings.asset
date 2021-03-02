@@ -28,6 +28,10 @@ MonoBehaviour:
   - {x: 2.5, y: 2.5, z: 2.5}
   rotationClamp: {x: 1, y: 360, z: 1}
   rbMassMinMax: {x: 0.75, y: 2.5}
+  maxDetectWallDistance: 1
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 64
   damage: 10
   damageRateInSeconds: 2
   destinationHeight: 3
