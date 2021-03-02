@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     public Vector3[] scaleClamp = new Vector3[2] {new Vector3(.25f, .25f, .25f), new Vector3(4, 4, 4)};
     public Vector3 rotationClamp = new Vector3(20, 360, 20);
     Vector3 movement;
+    Vector3 wallMove;
+    float inputVertical;
 
     float turn;
 
@@ -97,6 +99,10 @@ public class PlayerController : MonoBehaviour, IDamageable
         orien.transform.rotation = transform.rotation;
         orien.transform.rotation = Quaternion.Euler(new Vector3(0, orien.transform.eulerAngles.y, 0));
         movement = orien.transform.forward * Input.GetAxisRaw("Vertical") + orien.transform.right * Input.GetAxisRaw("Horizontal");
+
+        //ClimbWall Movement
+        inputVertical = Input.GetAxisRaw("Vertical");
+        wallMove = orien.transform.up * Input.GetAxisRaw("Vertical") + orien.transform.right * Input.GetAxisRaw("Horizontal");
 
         //look input
         turn = Input.GetAxis("Debug Horizontal") * turnSensitivity;
@@ -167,7 +173,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         detectWallRay.origin = transform.position + -orien.transform.forward * transform.localScale.z / 2f;
         detectWallRay.direction = -orien.transform.forward;
 
-        if (climbWall)
+        if (climbWall && inputVertical != 0)
             rb.isKinematic = true;
         else
             rb.isKinematic = false;
@@ -175,7 +181,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         if (Physics.Raycast(detectWallRay , out deatectClimbWallRayInfo, 0.5f, wallMask))
         {
             climbWall = true;
-            Vector3 wallMove = orien.transform.up * Input.GetAxisRaw("Vertical") + orien.transform.right * Input.GetAxisRaw("Horizontal");
+            
             rb.MovePosition(transform.position + wallMove.normalized * moveSpeed * Time.fixedDeltaTime);
         }
         else
