@@ -58,7 +58,9 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         rb = GetComponent<Rigidbody>();
         renderer = GetComponent<Renderer>();
-        orien = new GameObject("Temp");
+        orien = new GameObject("playerOrienTemp");
+        //orien = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        //orien.GetComponent<BoxCollider>().enabled = false;
         //orien = (GameObject)Instantiate(new GameObject("Temp"), transform.position, transform.rotation);
     }
 
@@ -95,9 +97,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     void Update()
     {
         //movement input
-        orien.transform.position = transform.position;
-        orien.transform.rotation = transform.rotation;
-        orien.transform.rotation = Quaternion.Euler(new Vector3(0, orien.transform.eulerAngles.y, 0));
+        orientOrien();
         movement = orien.transform.forward * Input.GetAxisRaw("Vertical") + orien.transform.right * Input.GetAxisRaw("Horizontal");
 
         //ClimbWall Movement
@@ -128,8 +128,57 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
+    void orientOrien()
+    {
+        orien.transform.position = transform.position;
+        orien.transform.localScale = transform.localScale;
+        //orien.transform.rotation = transform.rotation;
+        float[] dX = new float[6];
+        dX[0] = Vector3.Dot(transform.up, Vector3.up);
+        dX[1] = Vector3.Dot(transform.forward, Vector3.up);
+        dX[2] = Vector3.Dot(transform.right, Vector3.up);
+        dX[3] = Vector3.Dot(-transform.up, Vector3.up);
+        dX[4] = Vector3.Dot(-transform.forward, Vector3.up);
+        dX[5] = Vector3.Dot(-transform.right, Vector3.up);
+        int dXI = GetIndexOfLowestValue(dX);
+
+        if (dXI == 0)
+        {
+            orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            //print("y");
+        }
+        else if (dXI == 1)
+        {
+            orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            //print("z");
+        }
+        else if (dXI == 2)
+        {
+            orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            //print("x");
+        }
+        else if (dXI == 3)
+        {
+            orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            //print("-y");
+        }
+        else if (dXI == 4)
+        {
+            orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            //print("-z");
+        }
+        else if (dXI == 5)
+        {
+            orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            //print("-x");
+        }
+        //orien.transform.eulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
+        //print(transform.eulerAngles.y);
+    }
+
     void FixedUpdate()
     {
+
         //Scaling
         if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Joystick1Button4))
         {
@@ -167,18 +216,19 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
 
         //turning
+        //rb.AddTorque(Vector3.up * turn * rotSpeed * Time.fixedDeltaTime, ForceMode.VelocityChange);
         rb.MoveRotation(Quaternion.Euler((Vector3.up * turn * rotSpeed * Time.fixedDeltaTime) + transform.eulerAngles));
 
         //movement
         detectWallRay.origin = transform.position + -orien.transform.forward * transform.localScale.z / 2f;
         detectWallRay.direction = -orien.transform.forward;
 
-        if (climbWall && inputVertical != 0)
+        if (climbWall)
             rb.isKinematic = true;
         else
             rb.isKinematic = false;
         
-        if (Physics.Raycast(detectWallRay , out deatectClimbWallRayInfo, 0.5f, wallMask))
+        if (Physics.Raycast(detectWallRay , out deatectClimbWallRayInfo, 0.5f, wallMask) && inputVertical != 0)
         {
             climbWall = true;
             
@@ -278,5 +328,20 @@ public class PlayerController : MonoBehaviour, IDamageable
     public static float Remap(float value, float from1, float to1, float from2, float to2)
     {
         return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
+    }
+
+    public static int GetIndexOfLowestValue(float[] arr)
+    {
+        float value = float.PositiveInfinity;
+        int index = -1;
+        for (int i = 0; i < arr.Length; i++)
+        {
+            if (arr[i] < value)
+            {
+                index = i;
+                value = arr[i];
+            }
+        }
+        return index;
     }
 }
