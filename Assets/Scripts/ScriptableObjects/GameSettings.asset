@@ -28,7 +28,6 @@ MonoBehaviour:
   - {x: 2.5, y: 2.5, z: 2.5}
   rotationClamp: {x: 1, y: 360, z: 1}
   rbMassMinMax: {x: 0.75, y: 2.5}
-  maxDetectWallDistance: 1
   wallMask:
     serializedVersion: 2
     m_Bits: 64
@@ -38,6 +37,6 @@ MonoBehaviour:
   floodSpeed: 0.5
   delayToStartFlood: 5
   maxScreenRippleStrength: 0.0125
-  screenRippleFadeSpeed: 5
+  screenRippleFadeSpeed: 1
   screenRippleMat: {fileID: 2100000, guid: b2991e924c3ceeb41b33bec04b3313ac, type: 2}
   forwardRendererData: {fileID: 11400000, guid: 4a8e21d5c33334b11b34a596161b9360, type: 2}
