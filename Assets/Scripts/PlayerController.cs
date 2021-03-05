@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     void Update()
     {
         //movement input
-        orientOrien();
+        //orientOrien();
         movement = orien.transform.forward * Input.GetAxisRaw("Vertical") + orien.transform.right * Input.GetAxisRaw("Horizontal");
 
         //ClimbWall Movement
@@ -128,11 +128,13 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-    void orientOrien()
+    public void orientOrien()
     {
         orien.transform.position = transform.position;
         orien.transform.localScale = transform.localScale;
-        //orien.transform.rotation = transform.rotation;
+        orien.transform.rotation = transform.rotation;
+        orien.transform.eulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
+
         float[] dX = new float[6];
         dX[0] = Vector3.Dot(transform.up, Vector3.up);
         dX[1] = Vector3.Dot(transform.forward, Vector3.up);
@@ -144,33 +146,65 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         if (dXI == 0)
         {
-            orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-            //print("y");
+            if (Mathf.Abs(90 - transform.eulerAngles.y) < Mathf.Abs(-90 - transform.eulerAngles.y))
+            {
+                orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
+                print("y" + "L");
+            }
+            else
+            {
+                orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+                print("y" + "M");
+            }
         }
         else if (dXI == 1)
         {
             orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-            //print("z");
+            print("z");
         }
         else if (dXI == 2)
         {
-            orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-            //print("x");
+            if (Mathf.Abs(90 - transform.eulerAngles.y) < Mathf.Abs(-90 - transform.eulerAngles.y))
+            {
+                orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+                print("x" + "L");
+            }
+            else
+            {
+                orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y - 90, 0);
+                print("-x" + "M");
+            }
         }
         else if (dXI == 3)
         {
             orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-            //print("-y");
+            print("-y");
         }
         else if (dXI == 4)
         {
-            orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-            //print("-z");
+            if (Mathf.Abs(90 - transform.eulerAngles.y) < Mathf.Abs(-90 - transform.eulerAngles.y))
+            {
+                orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+                print("-z" + "L");
+            }
+            else
+            {
+                orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y - 90, 0);
+                print("-z" + "M");
+            }
         }
         else if (dXI == 5)
         {
-            orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-            //print("-x");
+            if (Mathf.Abs(90 - transform.eulerAngles.y) < Mathf.Abs(-90 - transform.eulerAngles.y))
+            {
+                orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+                print("-x" + "L");
+            }
+            else
+            {
+                orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+                print("-x" + "M");
+            }
         }
         //orien.transform.eulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
         //print(transform.eulerAngles.y);
@@ -178,7 +212,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     void FixedUpdate()
     {
-
+        //orientOrien();
         //Scaling
         if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Joystick1Button4))
         {
