@@ -38,9 +38,14 @@ public class GameManager : MonoBehaviour
 
     public void nextLevel()
     {
-        Gate.wonLevel -= nextLevel;
+        //Gate.wonLevel -= nextLevel;
         //next level code
         print("Won");
+        if (SceneManager.GetSceneByBuildIndex(SceneManager.GetActiveScene().buildIndex + 1) != null)
+        {
+            Gate.wonLevel -= nextLevel;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 
     public void playerDied()

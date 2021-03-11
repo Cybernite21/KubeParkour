@@ -146,16 +146,8 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         if (dXI == 0)
         {
-            if (Mathf.Abs(90 - transform.eulerAngles.y) < Mathf.Abs(-90 - transform.eulerAngles.y))
-            {
-                orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 180, 0);
-                print("y" + "L");
-            }
-            else
-            {
-                orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-                print("y" + "M");
-            }
+            orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            print("y");
         }
         else if (dXI == 1)
         {
@@ -164,16 +156,9 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
         else if (dXI == 2)
         {
-            if (Mathf.Abs(90 - transform.eulerAngles.y) < Mathf.Abs(-90 - transform.eulerAngles.y))
-            {
-                orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-                print("x" + "L");
-            }
-            else
-            {
-                orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y - 90, 0);
-                print("-x" + "M");
-            }
+            orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            print("x");
+
         }
         else if (dXI == 3)
         {
@@ -182,29 +167,13 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
         else if (dXI == 4)
         {
-            if (Mathf.Abs(90 - transform.eulerAngles.y) < Mathf.Abs(-90 - transform.eulerAngles.y))
-            {
-                orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-                print("-z" + "L");
-            }
-            else
-            {
-                orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y - 90, 0);
-                print("-z" + "M");
-            }
+            orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            print("-z");
         }
         else if (dXI == 5)
         {
-            if (Mathf.Abs(90 - transform.eulerAngles.y) < Mathf.Abs(-90 - transform.eulerAngles.y))
-            {
-                orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-                print("-x" + "L");
-            }
-            else
-            {
-                orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-                print("-x" + "M");
-            }
+            orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            print("-x");
         }
         //orien.transform.eulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
         //print(transform.eulerAngles.y);
@@ -261,8 +230,9 @@ public class PlayerController : MonoBehaviour, IDamageable
             rb.isKinematic = true;
         else
             rb.isKinematic = false;
-        
-        if (Physics.Raycast(detectWallRay , out deatectClimbWallRayInfo, 0.5f, wallMask) && inputVertical != 0)
+
+        //if (Physics.Raycast(detectWallRay , out deatectClimbWallRayInfo, 0.5f, wallMask) && inputVertical != 0)
+        if (Physics.BoxCast(detectWallRay.origin, Vector3.one * 0.5f, detectWallRay.direction, out deatectClimbWallRayInfo, Quaternion.identity, 0.5f, wallMask) && inputVertical != 0)
         {
             climbWall = true;
             
