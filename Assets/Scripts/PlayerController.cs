@@ -235,8 +235,15 @@ public class PlayerController : MonoBehaviour, IDamageable
         if (Physics.BoxCast(detectWallRay.origin, Vector3.one * 0.5f, detectWallRay.direction, out deatectClimbWallRayInfo, Quaternion.identity, 0.5f, wallMask) && inputVertical != 0)
         {
             climbWall = true;
-            
-            rb.MovePosition(transform.position + wallMove.normalized * moveSpeed * Time.fixedDeltaTime);
+            if(isGrounded && inputVertical < 0)
+            {
+                climbWall = false;
+                rb.MovePosition(transform.position + -movement.normalized * moveSpeed * Time.fixedDeltaTime);
+            }
+            else
+            {
+                rb.MovePosition(transform.position + wallMove.normalized * moveSpeed * Time.fixedDeltaTime);
+            }
         }
         else
         {
