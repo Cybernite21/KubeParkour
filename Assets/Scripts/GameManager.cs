@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
         //Gate.wonLevel -= nextLevel;
         //next level code
         print("Won");
-        if (SceneManager.GetSceneByBuildIndex(SceneManager.GetActiveScene().buildIndex + 1) != null)
+        if (SceneManager.GetActiveScene().buildIndex != SceneManager.sceneCountInBuildSettings - 1)
         {
             Gate.wonLevel -= nextLevel;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
