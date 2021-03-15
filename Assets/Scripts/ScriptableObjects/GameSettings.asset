@@ -34,8 +34,8 @@ MonoBehaviour:
   damage: 10
   damageRateInSeconds: 2
   destinationHeight: 3
-  floodSpeed: 0.5
-  delayToStartFlood: 5
+  floodSpeed: 0.25
+  delayToStartFlood: 10
   maxScreenRippleStrength: 0.0125
   screenRippleFadeSpeed: 1
   screenRippleMat: {fileID: 2100000, guid: b2991e924c3ceeb41b33bec04b3313ac, type: 2}
