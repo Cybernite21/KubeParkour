@@ -26,7 +26,7 @@ public class simpleButton : MonoBehaviour
     void OnTriggerEnter(Collider collision)
     {
        collision.gameObject.TryGetComponent<Rigidbody>(out Rigidbody rb);
-       if (rb.mass >= gManager.gameSettings.rbMassMinMax.y)
+       if (Mathf.Abs(rb.mass - gManager.gameSettings.rbMassMinMax.x) <= 0.5f)
        {
             if(isOn)
             {
