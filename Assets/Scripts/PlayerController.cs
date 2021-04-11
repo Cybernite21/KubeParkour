@@ -96,22 +96,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
-        //movement input
-        //orientOrien();
-        movement = orien.transform.forward * Input.GetAxisRaw("Vertical") + orien.transform.right * Input.GetAxisRaw("Horizontal");
-
-        //ClimbWall Movement
-        inputVertical = Input.GetAxisRaw("Vertical");
-        wallMove = orien.transform.up * Input.GetAxisRaw("Vertical") + orien.transform.right * Input.GetAxisRaw("Horizontal");
-
-        //look input
-        turn = Input.GetAxis("Debug Horizontal") * turnSensitivity;
-
-        //Jump Input
-        if(Input.GetKeyDown(KeyCode.E) && isGrounded || Input.GetKeyDown(KeyCode.Joystick1Button0) && isGrounded || Input.GetKeyDown(KeyCode.Joystick1Button5) && isGrounded)
-        {
-            jump = true;
-        }
+        movementCalculate();
 
         //Change color based on scale
         scaleFactor = Remap(transform.localScale.x, scaleClamp[0].x, scaleClamp[1].x, 0f, 1f);
@@ -128,6 +113,26 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
+    public void movementCalculate()
+    {
+        //movement input
+        //orientOrien();
+        movement = orien.transform.forward * Input.GetAxisRaw("Vertical") + orien.transform.right * Input.GetAxisRaw("Horizontal");
+
+        //ClimbWall Movement
+        inputVertical = Input.GetAxisRaw("Vertical");
+        wallMove = orien.transform.up * Input.GetAxisRaw("Vertical") + orien.transform.right * Input.GetAxisRaw("Horizontal");
+
+        //look input
+        turn = Input.GetAxis("Debug Horizontal") * turnSensitivity;
+
+        //Jump Input
+        if (Input.GetKeyDown(KeyCode.E) && isGrounded || Input.GetKeyDown(KeyCode.Joystick1Button0) && isGrounded || Input.GetKeyDown(KeyCode.Joystick1Button5) && isGrounded)
+        {
+            jump = true;
+        }
+    }
+
     public void orientOrien()
     {
         orien.transform.position = transform.position;
@@ -136,9 +141,9 @@ public class PlayerController : MonoBehaviour, IDamageable
         orien.transform.eulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
 
         float[] dX = new float[6];
-        dX[0] = Vector3.Dot(transform.up, Vector3.up);
-        dX[1] = Vector3.Dot(transform.forward, Vector3.up);
-        dX[2] = Vector3.Dot(transform.right, Vector3.up);
+        dX[0] = Vector3.Dot(transform.up, Vector3.up)-0.0001f;
+        dX[1] = Vector3.Dot(transform.forward, Vector3.up) - 0.0001f;
+        dX[2] = Vector3.Dot(transform.right, Vector3.up) - 0.0001f;
         dX[3] = Vector3.Dot(-transform.up, Vector3.up);
         dX[4] = Vector3.Dot(-transform.forward, Vector3.up);
         dX[5] = Vector3.Dot(-transform.right, Vector3.up);

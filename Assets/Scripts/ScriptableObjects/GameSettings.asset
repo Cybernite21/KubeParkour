@@ -34,7 +34,7 @@ MonoBehaviour:
   damage: 10
   damageRateInSeconds: 2
   destinationHeight: 4
-  floodSpeed: 0.0625
+  floodSpeed: 0.03125
   delayToStartFlood: 15
   maxScreenRippleStrength: 0.0125
   screenRippleFadeSpeed: 1
