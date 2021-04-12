@@ -30,7 +30,10 @@ public class PlayerController : MonoBehaviour, IDamageable
     public Vector3 rotationClamp = new Vector3(20, 360, 20);
     Vector3 movement;
     Vector3 wallMove;
+    Vector3 wallMoveH;
+    Vector3 wallMoveHN;
     float inputVertical;
+    float inputVerticalH;
 
     float turn;
 
@@ -121,7 +124,10 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         //ClimbWall Movement
         inputVertical = Input.GetAxisRaw("Vertical");
-        wallMove = orien.transform.up * Input.GetAxisRaw("Vertical") + orien.transform.right * Input.GetAxisRaw("Horizontal");
+        inputVerticalH = Input.GetAxisRaw("Horizontal");
+        wallMove = orien.transform.up * inputVertical + orien.transform.right * Input.GetAxisRaw("Horizontal");
+        wallMoveH = orien.transform.up * inputVerticalH + orien.transform.forward * Input.GetAxisRaw("Vertical");
+        wallMoveHN = orien.transform.up * inputVerticalH + orien.transform.forward * Input.GetAxisRaw("Vertical");
 
         //look input
         turn = Input.GetAxis("Debug Horizontal") * turnSensitivity;
@@ -227,6 +233,14 @@ public class PlayerController : MonoBehaviour, IDamageable
         //rb.AddTorque(Vector3.up * turn * rotSpeed * Time.fixedDeltaTime, ForceMode.VelocityChange);
         rb.MoveRotation(Quaternion.Euler((Vector3.up * turn * rotSpeed * Time.fixedDeltaTime) + transform.eulerAngles));
 
+        climbWallCalc();
+
+        //clamp rotation
+        //rb.rotation = Quaternion.Euler(new Vector3(Mathf.Clamp(rb.rotation.x, -rotationClamp.x, rotationClamp.x), Mathf.Clamp(rb.rotation.y, -rotationClamp.y, rotationClamp.y), Mathf.Clamp(rb.rotation.z, -rotationClamp.z, rotationClamp.z)));
+    }
+
+    void climbWallCalc()
+    {
         //movement
         detectWallRay.origin = transform.position + -orien.transform.forward * transform.localScale.z / 2f;
         detectWallRay.direction = -orien.transform.forward;
@@ -237,10 +251,13 @@ public class PlayerController : MonoBehaviour, IDamageable
             rb.isKinematic = false;
 
         //if (Physics.Raycast(detectWallRay , out deatectClimbWallRayInfo, 0.5f, wallMask) && inputVertical != 0)
-        if (Physics.BoxCast(detectWallRay.origin, Vector3.one * 0.5f, detectWallRay.direction, out deatectClimbWallRayInfo, Quaternion.identity, 0.5f, wallMask) && inputVertical != 0)
+        //detect Wall Forward
+        if (Physics.BoxCast(detectWallRay.origin, Vector3.one * 0.25f, detectWallRay.direction, out deatectClimbWallRayInfo, Quaternion.identity, 0.25f, wallMask) && inputVertical != 0)
         {
+            detectWallRay.direction = -orien.transform.right;
+            detectWallRay.origin = detectWallRay.origin = transform.position + -orien.transform.right * transform.localScale.z / 2f;
             climbWall = true;
-            if(isGrounded && inputVertical < 0)
+            if (isGrounded && inputVertical < 0)
             {
                 climbWall = false;
                 rb.MovePosition(transform.position + -movement.normalized * moveSpeed * Time.fixedDeltaTime);
@@ -250,14 +267,43 @@ public class PlayerController : MonoBehaviour, IDamageable
                 rb.MovePosition(transform.position + wallMove.normalized * moveSpeed * Time.fixedDeltaTime);
             }
         }
+        //detect Wall Right
+        else if(Physics.BoxCast(transform.position + -orien.transform.right * transform.localScale.z / 2f, Vector3.one * 0.25f, -orien.transform.right, out deatectClimbWallRayInfo, Quaternion.identity, 0.25f, wallMask) && inputVerticalH != 0)
+        {
+            print("right");
+            detectWallRay.direction = orien.transform.right;
+            detectWallRay.origin = detectWallRay.origin = transform.position + orien.transform.forward * transform.localScale.z / 2f;
+            climbWall = true;
+            if (isGrounded && inputVerticalH < 0)
+            {
+                climbWall = false;
+                rb.MovePosition(transform.position + -movement.normalized * moveSpeed * Time.fixedDeltaTime);
+            }
+            else
+            {
+                rb.MovePosition(transform.position + wallMoveH.normalized * moveSpeed * Time.fixedDeltaTime);
+            }
+        }
+        //detect Wall Left
+        else if(Physics.BoxCast(transform.position + orien.transform.right * transform.localScale.z / 2f, Vector3.one * 0.25f, orien.transform.right, out deatectClimbWallRayInfo, Quaternion.identity, 0.25f, wallMask) && inputVerticalH != 0)
+        {
+            print("left");
+            climbWall = true;
+            if (isGrounded && inputVerticalH > 0)
+            {
+                climbWall = false;
+                rb.MovePosition(transform.position + -movement.normalized * moveSpeed * Time.fixedDeltaTime);
+            }
+            else
+            {
+                rb.MovePosition(transform.position + -wallMoveHN.normalized * moveSpeed * Time.fixedDeltaTime);
+            }
+        }
         else
         {
             climbWall = false;
             rb.MovePosition(transform.position + -movement.normalized * moveSpeed * Time.fixedDeltaTime);
         }
-
-        //clamp rotation
-        //rb.rotation = Quaternion.Euler(new Vector3(Mathf.Clamp(rb.rotation.x, -rotationClamp.x, rotationClamp.x), Mathf.Clamp(rb.rotation.y, -rotationClamp.y, rotationClamp.y), Mathf.Clamp(rb.rotation.z, -rotationClamp.z, rotationClamp.z)));
     }
 
     //IDamageable Take Damage Function
