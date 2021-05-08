@@ -193,6 +193,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     void FixedUpdate()
     {
         //orientOrien();
+        orien.transform.position = transform.position;
+        orien.transform.localScale = transform.localScale;
         //Scaling
         if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Joystick1Button4))
         {
@@ -232,6 +234,10 @@ public class PlayerController : MonoBehaviour, IDamageable
         //turning
         //rb.AddTorque(Vector3.up * turn * rotSpeed * Time.fixedDeltaTime, ForceMode.VelocityChange);
         rb.MoveRotation(Quaternion.Euler((Vector3.up * turn * rotSpeed * Time.fixedDeltaTime) + transform.eulerAngles));
+        //Align Orien
+        orien.transform.rotation = Quaternion.Euler((Vector3.up * turn * rotSpeed * Time.fixedDeltaTime) + orien.transform.eulerAngles);
+        orien.transform.position = transform.position;
+        orien.transform.localScale = transform.localScale;
 
         climbWallCalc();
 

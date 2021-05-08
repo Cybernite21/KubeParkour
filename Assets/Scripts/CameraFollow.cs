@@ -81,7 +81,8 @@ public class CameraFollow : MonoBehaviour
 
 		//Transform newTarget = target;
 		//newTarget.position = newTarget.position + lookAtOffset;
-		plrCtrl.orientOrien();
+		//plrCtrl.orientOrien();
+		
 		offset = Vector3.Lerp(offsets[0], offsets[1], plrCtrl.scaleFactor);
 		//lookAtOffset = Vector3.Lerp(lookAtOffsets[0], lookAtOffsets[1], plr.GetComponent<PlayerController>().scaleFactor);
 		
