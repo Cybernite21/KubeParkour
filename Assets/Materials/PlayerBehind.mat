@@ -11,7 +11,7 @@ Material:
   m_Shader: {fileID: -6465566751694194690, guid: 0f8f8cade04092f4da98f7fb821e3ebc, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -32,7 +32,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_acad92070d484dae80236eed21220ec8: 0.5
+    - Vector1_acad92070d484dae80236eed21220ec8: 0.4
+    - Vector1_c777575b804842e8a0478171ded3968d: 0.25
     m_Colors:
     - Color_f633f88a9bb34b45b498281572e04e9e: {r: 1, g: 0.27830186, b: 0.27830186, a: 1}
   m_BuildTextureStacks: []
