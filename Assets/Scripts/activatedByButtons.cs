@@ -47,10 +47,12 @@ public class activatedByButtons : MonoBehaviour
             if (buttonsOnNum == buttonsToActivate.Length)
             {
                 activated = true;
+                GetComponent<MeshRenderer>().enabled = true;
             }
             else
             {
                 activated = false;
+                GetComponent<MeshRenderer>().enabled = false;
             }
         }
     }
