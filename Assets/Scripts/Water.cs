@@ -50,7 +50,7 @@ public class Water : MonoBehaviour
 
         plr = GameObject.FindGameObjectWithTag("Player").transform;
         waterBox = GetComponent<BoxCollider>();
-        Blit rippleBlit = forwardRendererData.rendererFeatures[0] as Blit;
+        Blit rippleBlit = forwardRendererData.rendererFeatures[forwardRendererData.rendererFeatures.Count-1] as Blit;
         screenRippleMatCopy = new Material(screenRippleMatOriginal);
         rippleBlit.settings.blitMaterial = screenRippleMatCopy;
         screenRippleMatCopy.SetFloat(screenRippleMatStrengthName, 0f);
