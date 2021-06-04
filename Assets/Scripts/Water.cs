@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
 [RequireComponent(typeof(BoxCollider))]
@@ -9,7 +10,7 @@ public class Water : MonoBehaviour
     public GameManager gManager;
 
     private List<IDamageable> objectsToDamage = new List<IDamageable>();
-    private int screenRippleMatStrengthName;
+    public int screenRippleMatStrengthName;
 
     public int damage = 10;
     public int damageRateInSeconds = 2;
@@ -22,10 +23,12 @@ public class Water : MonoBehaviour
     public float maxScreenRippleStrength = .005f;
     public float screenRippleFadeSpeed = 5;
 
-    public Material screenRippleMat;
+    public Material screenRippleMatOriginal;
+    public Material screenRippleMatCopy;
 
     public Transform plr;
 
+    [HideInInspector]
     public ForwardRendererData forwardRendererData;
 
     [HideInInspector]
@@ -40,17 +43,18 @@ public class Water : MonoBehaviour
     void Start()
     {
         gManager = GameObject.FindObjectOfType<GameManager>();
-        if(gManager.gameSettings.useTheseSettings)
+        if (gManager.gameSettings.useTheseSettings)
         {
             useGManagerSettings();
         }
 
         plr = GameObject.FindGameObjectWithTag("Player").transform;
         waterBox = GetComponent<BoxCollider>();
-        Blit rippleBlit = forwardRendererData.rendererFeatures[0] as Blit;
-        screenRippleMat = new Material(screenRippleMat);
-        rippleBlit.settings.blitMaterial = screenRippleMat;
-        screenRippleMat.SetFloat(screenRippleMatStrengthName, 0f);
+        Blit rippleBlit = forwardRendererData.rendererFeatures[forwardRendererData.rendererFeatures.Count-1] as Blit;
+        screenRippleMatCopy = new Material(screenRippleMatOriginal);
+        rippleBlit.settings.blitMaterial = screenRippleMatCopy;
+        screenRippleMatCopy.SetFloat(screenRippleMatStrengthName, 0f);
+        //print(rippleBlit.settings.blitMaterial.GetFloat(screenRippleMatStrengthName) + "" + rippleBlit.settings.blitMaterial.Equals(screenRippleMatCopy));
     }
 
     void useGManagerSettings()
@@ -63,7 +67,7 @@ public class Water : MonoBehaviour
         maxScreenRippleStrength = gManager.gameSettings.maxScreenRippleStrength;
         screenRippleFadeSpeed = gManager.gameSettings.screenRippleFadeSpeed;
 
-        screenRippleMat = gManager.gameSettings.screenRippleMat;
+        screenRippleMatOriginal = gManager.gameSettings.screenRippleMat;
         forwardRendererData = gManager.gameSettings.forwardRendererData;
     }
 
@@ -87,27 +91,29 @@ public class Water : MonoBehaviour
             {
                 obj.takeDamageFromWater(damage);
                 //Debugging
-                if(obj.AirInTank > 0)
+                /*if(obj.AirInTank > 0)
                 {
                     print(obj.AirInTank);
                 }
                 else
                 {
                     print(obj.Health);
-                } 
+                } */
             }
             _timer = Time.unscaledTime + damageRateInSeconds;
         }
 
         if(waterBox.bounds.Contains(plr.position))
         {
-            float t = screenRippleMat.GetFloat(screenRippleMatStrengthName);
-            screenRippleMat.SetFloat(screenRippleMatStrengthName, Mathf.Clamp(t + (maxScreenRippleStrength/screenRippleFadeSpeed * Time.deltaTime), 0, maxScreenRippleStrength));
+            float t = screenRippleMatCopy.GetFloat(screenRippleMatStrengthName);
+            screenRippleMatCopy.SetFloat(screenRippleMatStrengthName, Mathf.Clamp(t + (maxScreenRippleStrength/screenRippleFadeSpeed * Time.deltaTime), 0, maxScreenRippleStrength));
+            forwardRendererData.SetDirty();
         }
         else
         {
-            float t = screenRippleMat.GetFloat(screenRippleMatStrengthName);
-            screenRippleMat.SetFloat(screenRippleMatStrengthName, Mathf.Clamp(t - (maxScreenRippleStrength / screenRippleFadeSpeed * Time.deltaTime), 0, maxScreenRippleStrength));
+            float t = screenRippleMatCopy.GetFloat(screenRippleMatStrengthName);
+            screenRippleMatCopy.SetFloat(screenRippleMatStrengthName, Mathf.Clamp(t - (maxScreenRippleStrength / screenRippleFadeSpeed * Time.deltaTime), 0, maxScreenRippleStrength));
+            forwardRendererData.SetDirty();
         }
     }
 

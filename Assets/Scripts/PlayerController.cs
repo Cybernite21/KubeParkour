@@ -29,6 +29,11 @@ public class PlayerController : MonoBehaviour, IDamageable
     public Vector3[] scaleClamp = new Vector3[2] {new Vector3(.25f, .25f, .25f), new Vector3(4, 4, 4)};
     public Vector3 rotationClamp = new Vector3(20, 360, 20);
     Vector3 movement;
+    Vector3 wallMove;
+    Vector3 wallMoveH;
+    Vector3 wallMoveHN;
+    float inputVertical;
+    float inputVerticalH;
 
     float turn;
 
@@ -40,6 +45,12 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public bool isGrounded;
     public bool jump;
+    public bool climbWall;
+
+    Ray detectWallRay;
+    RaycastHit deatectClimbWallRayInfo;
+    public LayerMask wallMask;
+
     Renderer renderer;
 
     [HideInInspector]
@@ -50,7 +61,9 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         rb = GetComponent<Rigidbody>();
         renderer = GetComponent<Renderer>();
-        orien = new GameObject("Temp");
+        orien = new GameObject("playerOrienTemp");
+        //orien = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        //orien.GetComponent<BoxCollider>().enabled = false;
         //orien = (GameObject)Instantiate(new GameObject("Temp"), transform.position, transform.rotation);
     }
 
@@ -79,25 +92,14 @@ public class PlayerController : MonoBehaviour, IDamageable
         rotationClamp = gManager.gameSettings.rotationClamp;
 
         rbMassMinMax = gManager.gameSettings.rbMassMinMax;
+
+        wallMask = gManager.gameSettings.wallMask;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //movement input
-        orien.transform.position = transform.position;
-        orien.transform.rotation = transform.rotation;
-        orien.transform.rotation = Quaternion.Euler(new Vector3(0, orien.transform.eulerAngles.y, 0));
-        movement = orien.transform.forward * Input.GetAxisRaw("Vertical") + orien.transform.right * Input.GetAxisRaw("Horizontal");
-
-        //look input
-        turn = Input.GetAxis("Debug Horizontal") * turnSensitivity;
-
-        //Jump Input
-        if(Input.GetKeyDown(KeyCode.E) && isGrounded || Input.GetKeyDown(KeyCode.Joystick1Button0) && isGrounded || Input.GetKeyDown(KeyCode.Joystick1Button5) && isGrounded)
-        {
-            jump = true;
-        }
+        movementCalculate();
 
         //Change color based on scale
         scaleFactor = Remap(transform.localScale.x, scaleClamp[0].x, scaleClamp[1].x, 0f, 1f);
@@ -114,8 +116,85 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
+    public void movementCalculate()
+    {
+        //movement input
+        //orientOrien();
+        movement = orien.transform.forward * Input.GetAxisRaw("Vertical") + orien.transform.right * Input.GetAxisRaw("Horizontal");
+
+        //ClimbWall Movement
+        inputVertical = Input.GetAxisRaw("Vertical");
+        inputVerticalH = Input.GetAxisRaw("Horizontal");
+        wallMove = orien.transform.up * inputVertical + orien.transform.right * Input.GetAxisRaw("Horizontal");
+        wallMoveH = orien.transform.up * inputVerticalH + orien.transform.forward * Input.GetAxisRaw("Vertical");
+        wallMoveHN = orien.transform.up * inputVerticalH + orien.transform.forward * Input.GetAxisRaw("Vertical");
+
+        //look input
+        turn = Input.GetAxis("Debug Horizontal") * turnSensitivity;
+
+        //Jump Input
+        if (Input.GetKeyDown(KeyCode.E) && isGrounded || Input.GetKeyDown(KeyCode.Joystick1Button0) && isGrounded || Input.GetKeyDown(KeyCode.Joystick1Button5) && isGrounded)
+        {
+            jump = true;
+        }
+    }
+
+    public void orientOrien()
+    {
+        orien.transform.position = transform.position;
+        orien.transform.localScale = transform.localScale;
+        orien.transform.rotation = transform.rotation;
+        orien.transform.eulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
+
+        float[] dX = new float[6];
+        dX[0] = Vector3.Dot(transform.up, Vector3.up)-0.0001f;
+        dX[1] = Vector3.Dot(transform.forward, Vector3.up) - 0.0001f;
+        dX[2] = Vector3.Dot(transform.right, Vector3.up) - 0.0001f;
+        dX[3] = Vector3.Dot(-transform.up, Vector3.up);
+        dX[4] = Vector3.Dot(-transform.forward, Vector3.up);
+        dX[5] = Vector3.Dot(-transform.right, Vector3.up);
+        int dXI = GetIndexOfLowestValue(dX);
+
+        if (dXI == 0)
+        {
+            orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            print("y");
+        }
+        else if (dXI == 1)
+        {
+            orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            print("z");
+        }
+        else if (dXI == 2)
+        {
+            orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            print("x");
+
+        }
+        else if (dXI == 3)
+        {
+            orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            print("-y");
+        }
+        else if (dXI == 4)
+        {
+            orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            print("-z");
+        }
+        else if (dXI == 5)
+        {
+            orien.transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            print("-x");
+        }
+        //orien.transform.eulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
+        //print(transform.eulerAngles.y);
+    }
+
     void FixedUpdate()
     {
+        //orientOrien();
+        orien.transform.position = transform.position;
+        orien.transform.localScale = transform.localScale;
         //Scaling
         if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Joystick1Button4))
         {
@@ -153,13 +232,84 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
 
         //turning
+        //rb.AddTorque(Vector3.up * turn * rotSpeed * Time.fixedDeltaTime, ForceMode.VelocityChange);
         rb.MoveRotation(Quaternion.Euler((Vector3.up * turn * rotSpeed * Time.fixedDeltaTime) + transform.eulerAngles));
+        //Align Orien
+        orien.transform.rotation = Quaternion.Euler((Vector3.up * turn * rotSpeed * Time.fixedDeltaTime) + orien.transform.eulerAngles);
+        orien.transform.position = transform.position;
+        orien.transform.localScale = transform.localScale;
 
-        //movement
-        rb.MovePosition(transform.position + -movement.normalized * moveSpeed * Time.fixedDeltaTime);
+        climbWallCalc();
 
         //clamp rotation
         //rb.rotation = Quaternion.Euler(new Vector3(Mathf.Clamp(rb.rotation.x, -rotationClamp.x, rotationClamp.x), Mathf.Clamp(rb.rotation.y, -rotationClamp.y, rotationClamp.y), Mathf.Clamp(rb.rotation.z, -rotationClamp.z, rotationClamp.z)));
+    }
+
+    void climbWallCalc()
+    {
+        //movement
+        detectWallRay.origin = transform.position + -orien.transform.forward * transform.localScale.z / 2f;
+        detectWallRay.direction = -orien.transform.forward;
+
+        if (climbWall)
+            rb.isKinematic = true;
+        else
+            rb.isKinematic = false;
+
+        //if (Physics.Raycast(detectWallRay , out deatectClimbWallRayInfo, 0.5f, wallMask) && inputVertical != 0)
+        //detect Wall Forward
+        if (Physics.BoxCast(detectWallRay.origin, Vector3.one * 0.25f, detectWallRay.direction, out deatectClimbWallRayInfo, Quaternion.identity, 0.25f, wallMask) && inputVertical != 0)
+        {
+            detectWallRay.direction = -orien.transform.right;
+            detectWallRay.origin = detectWallRay.origin = transform.position + -orien.transform.right * transform.localScale.z / 2f;
+            climbWall = true;
+            if (isGrounded && inputVertical < 0)
+            {
+                climbWall = false;
+                rb.MovePosition(transform.position + -movement.normalized * moveSpeed * Time.fixedDeltaTime);
+            }
+            else
+            {
+                rb.MovePosition(transform.position + wallMove.normalized * moveSpeed * Time.fixedDeltaTime);
+            }
+        }
+        //detect Wall Right
+        else if(Physics.BoxCast(transform.position + -orien.transform.right * transform.localScale.z / 2f, Vector3.one * 0.25f, -orien.transform.right, out deatectClimbWallRayInfo, Quaternion.identity, 0.25f, wallMask) && inputVerticalH != 0)
+        {
+            print("right");
+            detectWallRay.direction = orien.transform.right;
+            detectWallRay.origin = detectWallRay.origin = transform.position + orien.transform.forward * transform.localScale.z / 2f;
+            climbWall = true;
+            if (isGrounded && inputVerticalH < 0)
+            {
+                climbWall = false;
+                rb.MovePosition(transform.position + -movement.normalized * moveSpeed * Time.fixedDeltaTime);
+            }
+            else
+            {
+                rb.MovePosition(transform.position + wallMoveH.normalized * moveSpeed * Time.fixedDeltaTime);
+            }
+        }
+        //detect Wall Left
+        else if(Physics.BoxCast(transform.position + orien.transform.right * transform.localScale.z / 2f, Vector3.one * 0.25f, orien.transform.right, out deatectClimbWallRayInfo, Quaternion.identity, 0.25f, wallMask) && inputVerticalH != 0)
+        {
+            print("left");
+            climbWall = true;
+            if (isGrounded && inputVerticalH > 0)
+            {
+                climbWall = false;
+                rb.MovePosition(transform.position + -movement.normalized * moveSpeed * Time.fixedDeltaTime);
+            }
+            else
+            {
+                rb.MovePosition(transform.position + -wallMoveHN.normalized * moveSpeed * Time.fixedDeltaTime);
+            }
+        }
+        else
+        {
+            climbWall = false;
+            rb.MovePosition(transform.position + -movement.normalized * moveSpeed * Time.fixedDeltaTime);
+        }
     }
 
     //IDamageable Take Damage Function
@@ -246,5 +396,20 @@ public class PlayerController : MonoBehaviour, IDamageable
     public static float Remap(float value, float from1, float to1, float from2, float to2)
     {
         return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
+    }
+
+    public static int GetIndexOfLowestValue(float[] arr)
+    {
+        float value = float.PositiveInfinity;
+        int index = -1;
+        for (int i = 0; i < arr.Length; i++)
+        {
+            if (arr[i] < value)
+            {
+                index = i;
+                value = arr[i];
+            }
+        }
+        return index;
     }
 }

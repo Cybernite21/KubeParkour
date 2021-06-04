@@ -2,6 +2,7 @@
 # Unity files
 *.meta -text merge=unityyamlmerge diff
 *.unity -text merge=unityyamlmerge diff
+*.unity filter=lfs diff=lfs merge=lfs -text lockable
 *.asset -text merge=unityyamlmerge diff
 *.prefab filter=lfs diff=lfs merge=lfs -text
 *.mat -text merge=unityyamlmerge diff

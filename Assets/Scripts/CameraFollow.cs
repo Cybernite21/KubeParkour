@@ -25,6 +25,7 @@ public class CameraFollow : MonoBehaviour
 	float turn;
 
 	public Transform plr;
+	public PlayerController plrCtrl;
 
 	//public Volume pp;
 	//DepthOfField dof;
@@ -35,7 +36,8 @@ public class CameraFollow : MonoBehaviour
 	void Start()
 	{
 		plr = GameObject.FindGameObjectWithTag("Player").transform;
-		plrControllerOrien = plr.GetComponent<PlayerController>().orien.transform;
+		plrCtrl = plr.GetComponent<PlayerController>();
+		plrControllerOrien = plrCtrl.orien.transform;
 
 		//pp.profile.TryGet<DepthOfField>(out dof);
 		//r = new Ray(transform.position, transform.forward);
@@ -79,12 +81,14 @@ public class CameraFollow : MonoBehaviour
 
 		//Transform newTarget = target;
 		//newTarget.position = newTarget.position + lookAtOffset;
-
-		offset = Vector3.Lerp(offsets[0], offsets[1], plr.GetComponent<PlayerController>().scaleFactor);
+		//plrCtrl.orientOrien();
+		
+		offset = Vector3.Lerp(offsets[0], offsets[1], plrCtrl.scaleFactor);
 		//lookAtOffset = Vector3.Lerp(lookAtOffsets[0], lookAtOffsets[1], plr.GetComponent<PlayerController>().scaleFactor);
-
+		
 		Vector3 desiredPosition = plrControllerOrien.position + plrControllerOrien.forward * offset.z + plrControllerOrien.right * offset.x + plrControllerOrien.up * offset.y;
 		//Vector3 desiredPosition = target.position + offset;
+		//print(plrControllerOrien.eulerAngles);
 		smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime * 2);
 		//transform.position = smoothedPosition;
 

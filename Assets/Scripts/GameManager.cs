@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public PlayerController plr;
+    public Water water;
 
     public int frameRate = 60;
+
+    public float restartLevelDelay = 2f;
 
     public GameSettings gameSettings;
 
@@ -18,11 +23,42 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = frameRate;
+        Gate.wonLevel += nextLevel;
+        PlayerController.playerDeath += playerDied;
+
+        plr = FindObjectOfType<PlayerController>();
+        water = FindObjectOfType<Water>();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void nextLevel()
+    {
+        //Gate.wonLevel -= nextLevel;
+        //next level code
+        print("Won");
+        if (SceneManager.GetActiveScene().buildIndex != SceneManager.sceneCountInBuildSettings - 1)
+        {
+            Gate.wonLevel -= nextLevel;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+    }
+
+    public void playerDied()
+    {
+        PlayerController.playerDeath -= playerDied;
+        //code when player dies
+        print("Death");
+        plr.enabled = false;
+        Invoke("restartLevel", restartLevelDelay);
+    }
+
+    public void restartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

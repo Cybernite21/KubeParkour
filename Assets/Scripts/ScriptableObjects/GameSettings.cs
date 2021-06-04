@@ -23,6 +23,8 @@ public class GameSettings : ScriptableObject
     public Vector3[] scaleClamp = new Vector3[2] { new Vector3(.25f, .25f, .25f), new Vector3(4, 4, 4) };
     public Vector3 rotationClamp = new Vector3(20, 360, 20);
     public Vector2 rbMassMinMax;
+    public RaycastHit deatectClimbWallRayInfo;
+    public LayerMask wallMask;
     [Space(10)]
     [Header("Damage:")]
     [Space(5)]
