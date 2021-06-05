@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EnemyTurretNormalDecals 1
+  m_Shader: {fileID: -6465566751694194690, guid: 736e91262f3cb7346b3a0dad6322dc2e, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 2
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_1079889F:
+        m_Texture: {fileID: 2800000, guid: 7a3bd57a13987224281fd90b4d730060, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_19F6F520:
+        m_Texture: {fileID: 2800000, guid: e93317dd00c9dc347aa3775d7d731edd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_8227588A:
+        m_Texture: {fileID: 2800000, guid: bccafff636a269346afb1ee4a2470f3a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_971853EA:
+        m_Texture: {fileID: 2800000, guid: f33dcf1103895ef4cad38444200a1827, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMapping_78ab289c24bd49ecb80a2effdd64c8ab_Heightmap_1:
+        m_Texture: {fileID: 2800000, guid: 40deac7299b7a7b44a59d31293230b82, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_1CBDEB70: 1
+    - Vector1_4EF1C959: 0.005
+    - Vector1_5a3d2929a6b446fb873ae011e9582442: 1.08
+    - Vector1_A5E02BC2: 0.7
+    - Vector1_CF2B25AB: 1
+    - Vector1_c00d774ad2dd4423a2a366547e472f75: 1.66
+    - Vector1_dd69ab085d8843e999bf4a290b454b1e: 77.06
+    m_Colors:
+    - Color_7AE13451: {r: 0.35849056, g: 0.35849056, b: 0.35849056, a: 0}
+  m_BuildTextureStacks: []
